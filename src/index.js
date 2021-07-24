@@ -5,28 +5,19 @@ app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
 
-//diffrence : scoping function scope and block scope , and cant access before declaring
+//no binding and reassigning allowed
 
-console.log(z);
-console.log(y);
+var a = 10;
+a = 20;
 
-var z = "test";
+let b = 20;
+b = 10;
 
-let y = "test";
+const c = 30;
+c = 40;
 
-function one() {
-  if (true) {
-    var a = 123;
-  }
-  console.log(a);
-}
+const d = { name: "sarang" };
+d.name = "sarang jain";
 
-{
-  let b = 123;
-}
-
-one();
-console.log(b);
-
-//for(){}
-//if(){}
+const e = [1, 2, 3];
+e.push(5);
