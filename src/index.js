@@ -5,19 +5,27 @@ app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
 
-//no binding and reassigning allowed
+// ---- comparision
 
-var a = 10;
-a = 20;
+console.log(1 == "1");
+console.log(1 === "1");
 
-let b = 20;
-b = 10;
+// truthy values
+console.log(!!true);
+console.log(Boolean(true));
+console.log(!!{});
+console.log(!![]);
+console.log(!!new Date());
+console.log(!!"0");
+console.log(!!42);
+console.log(!!-42);
+console.log(!!3.14);
+console.log(!!-3.14);
 
-const c = 30;
-c = 40;
-
-const d = { name: "sarang" };
-d.name = "sarang jain";
-
-const e = [1, 2, 3];
-e.push(5);
+// falsy values
+console.log(!!false);
+console.log(!!null);
+console.log(!!undefined);
+console.log(!!0);
+console.log(!!NaN);
+console.log(!!"");
