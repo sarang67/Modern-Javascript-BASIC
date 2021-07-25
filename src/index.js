@@ -50,17 +50,13 @@ const renderCountrry = function (data, className = "") {
 
 // getCountryAndNeighbour("Iran");
 
-// const getCountryAndNeighbour = function (countryName) {
-//   const request = new XMLHttpRequest();
-//   request.open("get", `https://restcountries.eu/rest/v2/name/${countryName}`);
-//   request.send();
-//}
-
 //`https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
 
 const getCountry = function (countryName) {
   let request = fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
+
   console.log(request);
+
   request
     .then(function (response) {
       return response.json();
@@ -68,8 +64,17 @@ const getCountry = function (countryName) {
     .then(function (data) {
       console.log(data);
       renderCountrry(data[0]);
+      const neighbourCountryCode = data[0].borders[0];
+      if (neighbourCountryCode) {
+        return fetch(
+          `https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
+        );
+      }
+    })
+    .then((respone) => respone.json())
+    .then((neighbourCountry) => {
+      renderCountrry(neighbourCountry, "neighbour");
     });
 };
 
 getCountry("Iran");
-getCountry("India");
