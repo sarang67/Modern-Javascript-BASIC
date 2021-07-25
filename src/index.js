@@ -22,30 +22,54 @@ const renderCountrry = function (data, className = "") {
   countriesElement.style.opacity = 1;
 };
 
-const getCountryAndNeighbour = function (countryName) {
-  const request = new XMLHttpRequest();
-  request.open("get", `https://restcountries.eu/rest/v2/name/${countryName}`);
-  request.send();
+// const getCountryAndNeighbour = function (countryName) {
+//   const request = new XMLHttpRequest();
+//   request.open("get", `https://restcountries.eu/rest/v2/name/${countryName}`);
+//   request.send();
 
-  request.addEventListener("load", function () {
-    const [data] = JSON.parse(request.responseText);
-    const [neighbourCountryCode] = data.borders;
-    renderCountrry(data);
+//   request.addEventListener("load", function () {
+//     const [data] = JSON.parse(request.responseText);
+//     const [neighbourCountryCode] = data.borders;
+//     renderCountrry(data);
 
-    if (neighbourCountryCode) {
-      const request2 = new XMLHttpRequest();
-      request2.open(
-        "get",
-        `https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
-      );
-      request2.send();
+//     if (neighbourCountryCode) {
+//       const request2 = new XMLHttpRequest();
+//       request2.open(
+//         "get",
+//         `https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
+//       );
+//       request2.send();
 
-      request2.addEventListener("load", function () {
-        const data = JSON.parse(request2.responseText);
-        renderCountrry(data, "neighbour");
-      });
-    }
-  });
+//       request2.addEventListener("load", function () {
+//         const data = JSON.parse(request2.responseText);
+//         renderCountrry(data, "neighbour");
+//       });
+//     }
+//   });
+// };
+
+// getCountryAndNeighbour("Iran");
+
+// const getCountryAndNeighbour = function (countryName) {
+//   const request = new XMLHttpRequest();
+//   request.open("get", `https://restcountries.eu/rest/v2/name/${countryName}`);
+//   request.send();
+//}
+
+//`https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
+
+const getCountry = function (countryName) {
+  let request = fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
+  console.log(request);
+  request
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      renderCountrry(data[0]);
+    });
 };
 
-getCountryAndNeighbour("Iran");
+getCountry("Iran");
+getCountry("India");
