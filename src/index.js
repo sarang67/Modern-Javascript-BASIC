@@ -1,6 +1,7 @@
 import "../assets/css/style.css";
 
 const countriesElement = document.querySelector(".countries");
+const btn = document.querySelector(".btn-country");
 
 const renderCountrry = function (data, className = "") {
   const { name, region, flag, population, languages, currencies } = data;
@@ -19,7 +20,10 @@ const renderCountrry = function (data, className = "") {
 
   console.log(counteriesHtml);
   countriesElement.innerHTML += counteriesHtml;
-  countriesElement.style.opacity = 1;
+};
+
+const renderError = function (msg) {
+  countriesElement.innerHTML = msg;
 };
 
 const getCountry = function (countryName) {
@@ -44,7 +48,15 @@ const getCountry = function (countryName) {
     .then((respone) => respone.json())
     .then((neighbourCountry) => {
       renderCountrry(neighbourCountry, "neighbour");
+    })
+    .catch((err) => {
+      renderError(`Something went wrong !!! ${err}`);
+    })
+    .finally(() => {
+      countriesElement.style.opacity = 1;
     });
 };
 
-getCountry("Iran");
+btn.addEventListener("click", () => {
+  getCountry("Iran");
+});
