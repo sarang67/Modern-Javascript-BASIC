@@ -22,36 +22,6 @@ const renderCountrry = function (data, className = "") {
   countriesElement.style.opacity = 1;
 };
 
-// const getCountryAndNeighbour = function (countryName) {
-//   const request = new XMLHttpRequest();
-//   request.open("get", `https://restcountries.eu/rest/v2/name/${countryName}`);
-//   request.send();
-
-//   request.addEventListener("load", function () {
-//     const [data] = JSON.parse(request.responseText);
-//     const [neighbourCountryCode] = data.borders;
-//     renderCountrry(data);
-
-//     if (neighbourCountryCode) {
-//       const request2 = new XMLHttpRequest();
-//       request2.open(
-//         "get",
-//         `https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
-//       );
-//       request2.send();
-
-//       request2.addEventListener("load", function () {
-//         const data = JSON.parse(request2.responseText);
-//         renderCountrry(data, "neighbour");
-//       });
-//     }
-//   });
-// };
-
-// getCountryAndNeighbour("Iran");
-
-//`https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
-
 const getCountry = function (countryName) {
   let request = fetch(`https://restcountries.eu/rest/v2/name/${countryName}`);
 
