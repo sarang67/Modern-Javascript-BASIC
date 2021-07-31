@@ -32,20 +32,31 @@ const getCountry = function (countryName) {
   console.log(request);
 
   request
-    .then(function (response) {
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`Country is not found ${response.status}`);
+      }
       return response.json();
     })
-    .then(function (data) {
+    .then((data) => {
       console.log(data);
       renderCountrry(data[0]);
-      const neighbourCountryCode = data[0].borders[0];
+      //const neighbourCountryCode = data[0].borders[0];
+      const neighbourCountryCode = "1234";
+
       if (neighbourCountryCode) {
         return fetch(
           `https://restcountries.eu/rest/v2/alpha/${neighbourCountryCode}`
         );
       }
     })
-    .then((respone) => respone.json())
+    .then((respone) => {
+      if (!respone.ok) {
+        throw new Error(`Country is not found ${respone.status}`);
+      }
+      return respone.json();
+    })
     .then((neighbourCountry) => {
       renderCountrry(neighbourCountry, "neighbour");
     })
