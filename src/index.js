@@ -5,181 +5,92 @@ app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
 
+// function declration
 
+function add() {
+  console.log("I am add funcion");
+}
 
-// string in depth
+add();
+console.log(add);
 
-// string literal
-// let greet = "Hello sarang";
+function add2(no1, no2) {
+  return no1 + no2;
+}
 
-// let isHappy = false;
+let add2Result = add2(10, 20);
+console.log(add2Result);
 
-// function myname() {
-//   return "sarang jain";
-// }
+// function expression (annonymous)
 
-// const paste = "Italian pasta";
-// console.log(greet);
+let addExpression = function () {
+  console.log("I am add Expression");
+};
 
-// console.log("i am a string in single quote");
-// console.log("i am a string in double quote");
-// console.log("Hello ma\"am  saran'g ");
+addExpression();
+console.log(addExpression);
+console.log(addExpression.name);
 
-// // ES 6 template literal
+// function expression (with  name)
+let addExpression2 = function makeAdd() {
+  console.log("I am add2 Expression");
+};
 
-// console.log(`I am sarang jain i like ${paste} !!!`);
+addExpression2();
+console.log(addExpression2.name);
+// console.log(makeAdd()); error
 
-// console.log("I am sarang jain i like " + paste + "!!!");
-// console.log(`${myname()}`);
-// console.log(`${greet.toUpperCase()}`);
-// console.log(`${isHappy ? ":)" : ":("}`);
-
-// console.log(`
-
-//  Information
-//  -----------
-//  My name is sarang jain,
-//  My age is 32,
-//  I like ${paste}
-
-// `);
-
-/// string type conversion
-
-// console.log(String(55));
-// console.log(String("sarang jain"));
-// console.log(String(true));
-// console.log(String(55 + 10));
-// console.log(String(55 + "10"));
-// console.log(String(10 + 10 + "55"));
-// console.log(String({ name: "sarang jain" }));
-// console.log(String([1, 2, 3, 4]));
-// console.log(String([1, 2, 3, 4]));
-// console.log(String(["Hi", "Hello", "Namastey"]));
-
-// string function constructor using new
-
-console.log(new String("sarang jain"));
-console.log(new String("sarang jain").length);
-
-// ============================================
-
-// // string properties and indexes
-
-// //string properties and indexes
-
-// let myInfo = {
-//   name: "sarang jain",
-//   age: 32,
-//   subject: {
-//     favSub: "Javascript",
-//   },
-// };
-
-// // Dot notation
-// myInfo.age = 33;
-// console.log(myInfo.age);
-// myInfo.job = "software engineer";
-
-// // computed member acces operator []
-
-// myInfo["name"] = "sarang kumar jain";
-// console.log(myInfo["name"]);
-// myInfo["city"] = "gwalior";
-
-// console.log(myInfo);
-
-// let key = "city";
-
-// console.log(myInfo[key]);
-
-// let myInfo2 = {
-//   name: "sarang jain",
-//   age: 32,
-//   subject: {
-//     favSub: "Javascript",
-//   },
-// };
-
-// myInfo2["age"] = 50; // updating the property
-// myInfo2["newProperty"] = "new value"; // new property adding
-
-// console.log(myInfo2["newProperty"]); // reading
-// console.log(myInfo2);
-
-// const teacherName = "sarang kumar jain";
-
-// // console.log(teacherName.length);
-
-// console.log(teacherName[0]);
-// console.log(teacherName["0"]);
-// console.log(teacherName["2"]);
-// console.log(teacherName["3"]);
-// console.log(teacherName["4"]);
-// console.log(teacherName["5"]);
-
-// console.log(teacherName[teacherName.length - 1]);
-// console.log(new String("sarang kumar jain"));
-
-
-
-// // immutability in string
-
-// let myName = "sarang jain";
-// let myRefName = myName;
-
-// console.log(myName);
-// console.log(myRefName);
-
-// myName += " javascript teacher";
-// myRefName = myName.toUpperCase();
-
-// console.log(myName);
-// console.log(myRefName);
-
-
-// ========================
-
-// // typechecking string
-
-// console.log(typeof "sarang jain");
-// console.log("sarang jain" instanceof String);
-// console.log(new String("sarang jain") instanceof String);
-// console.log(String("sarang jain") instanceof String);
-
-
-
-// string methods
-
-// String.method() ---> utility
+//arrow function Shorthand function
 
 /*
- String.prototype
-  var muyName = 'sarang jain'
-  myname.method();
+let greet = function () {
+  console.log("hello all");
+};
+
+let add = function(a,b){
+    return a+b;
+}
 */
 
-// console.log(String.prototype);
-// let myName = "sarang jain";
-// console.log(myName.charAt(5));
+let greet = () => {
+  console.log("hello all from greet");
+};
 
-// console.log("sarang jain".indexOf("a"));
+greet();
 
-// console.log("sarang jain".includes("s"));
+let greet2 = () => console.log("hello all from greet 2");
+greet2();
 
-// console.log("sarang jain".replace("sarang", "sarang kumar"));
+let addArrow = (a, b) => {
+  let c = a + b;
+  return c;
+};
 
-// console.log("sarang jain".replace("sarang", "sarang kumar"));
-// console.log("sarang jain".replace(/jain/, "sarang kumar"));
+addArrow(10, 20);
 
-// console.log("sarang jain".slice(2, -1));
-// console.log("sarang jain".slice(2, 4));
-// console.log("sarang jain".slice(-3));
-// console.log("sarang jain".slice(2));
+let addArrow2 = (a, b) => console.log(a + b);
 
-// console.log("sarang~kumar~jain".split("~"));
-// console.log("sarang~kumar~jain".split(/~/));
+addArrow2(50, 50);
+// ===========================================================
 
-// console.log("        sarang~kumar~jain      ".trim());
-// console.log("        sarang~kumar~jain      ".replace(/\s/g, ""));
+// function constructor declration
+let numberA = "numberA";
+let numberB = "numberB";
+const sumFunction = new Function(numberA, numberB, "return numberA + numberB");
+console.log(sumFunction(10, 15)); // => 25
 
+const greetFn = new Function("return 'hello'");
+console.log(greetFn());
+
+/*
+The function object type has a constructor: Function.
+When Function is invoked as a constructor new Function(arg1, arg2, ..., argN, bodyString), a new function is created. The arguments arg1, args2, ..., argN passed to constructor become the parameter names for the new function and the last argument bodyString is used as the function body code.
+
+sumFunction created with Function constructor invocation has parameters numberA and numberB and the body return numberA + numberB.
+
+The functions created this way don’t have access to the current scope, thus closures cannot be created. They are always created in the global scope.
+
+Remember that functions almost never should be declared using new Function(). Because the function body is evaluated on runtime, this approach inherits many eval() usage problems: security risks, harder debugging, no way to apply engine optimizations, no editor auto-complete.
+*/
+
+//============================================================
