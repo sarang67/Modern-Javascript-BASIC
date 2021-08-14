@@ -5,250 +5,255 @@ app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
 
-// hoisting in nature
-console.log(add);
-console.log(addExpression);
-console.log(addArrow);
+// Function in depth 3
+
+// Function in depth
+// Nature of this keyword and call apply bind
+
+/*
+        
+        1) any function ---> this ---> global object
+        2) any method  ----> this ----> self object
+        3) short function  (this behaviour free) ---> this ---> it will take this behaviour from where this is written 
+        (check in above line where this is written)
+
+
+        in case of strict mode 
+        1) any function ---> this ---> undefined
+         
+  */
+
+// Function in depth
+// Nature of this keyword and call apply bind
+
+console.log(this); // window , global object
+
+var checkagainthis5 = () => {
+  console.log(this); // window , global object
+};
+
+checkagainthis5();
+
+function checkthis() {
+  console.log(this); // window , global object
+}
+
+checkthis();
+
+let checkthis2 = function () {
+  console.log(this); // window , global object
+};
+
+checkthis2();
+
+let obj = {
+  myName: "sarang",
+  age: 30,
+  getInfo: function () {
+    console.log(this); // self object
+    console.log(this.myName, this.age);
+
+    // solution  till 2015
+    var self = this;
+
+    function checkagainthis() {
+      console.log(this); // window , global object
+      console.log(self.myName, self.age);
+    }
+
+    checkagainthis();
+
+    // short function
+
+    var checkagainthis1 = () => {
+      console.log(this); // self object
+      console.log(this.myName, this.age); // self object
+    };
+
+    checkagainthis1();
+  },
+};
+
+console.log(obj.getInfo());
+
+/*
+// call apply bind
+// when we use function as a object we use these methdo, we can change the context for which function will call for which context
+
+  call(context) --> immediate call the function , argument is given simple form
+  apply(context) --> immediate call the function , argument is given array form
+  bind(context) --> will not immediate call the function, this will give new defination of function for later call
+
+      first argument would be ---> will be context object
+
+
+      you are changing the behaviour of this, using call apply bind.
+  */
+
+function sayHello() {
+  console.log("Hello students");
+}
+
+sayHello();
+sayHello.call();
+sayHello.apply();
+let newBindDefination = sayHello.bind();
+console.log(newBindDefination);
+newBindDefination();
 
 function add(a, b) {
-  return a + b;
+  console.log(a + b);
 }
 
-var addExpression = function (a, b) {
-  return a + b;
+add(10, 10);
+add.call(this, 10, 20);
+add.apply(this, [10, 20]);
+
+let newAdd = add.bind(this, 10, 20);
+console.log(newAdd);
+newAdd();
+
+// what is context , what is parameter
+
+function checkThis() {
+  console.log(this);
+}
+
+checkThis();
+checkThis.call(undefined);
+checkThis.call("amit");
+checkThis.call([]);
+checkThis.call({});
+checkThis.call(true);
+checkThis.call(null);
+checkThis.apply(new Date());
+checkThis.apply({ name: "sarang", age: 35 });
+checkThis.apply([1, 2, 3, 4]);
+
+let myInformation = {
+  name: "sarang jain",
+  age: 35,
+  getInfo: function () {
+    console.log(this.name, this.age);
+  },
 };
 
-var addArrow = (a, b) => console.log(a + b);
-
-// default parameters *************************
-
-// parameter
-function makeRecipie(name = "dal bati", param = {}, param2 = []) {
-  // if (!name) {
-  //   name = "dalbati"; // default value
-  // }
-
-  // name = name || "dal bati";
-
-  console.log(`preparaing recipie ${name.toUpperCase()}`);
-  console.log(param, param2);
-}
-
-// argumant
-
-makeRecipie("Pizza");
-makeRecipie("burger");
-makeRecipie();
-
-// function ...rest parameter *************************
-
-function makePrice(p1, p2, p3, p4, p5) {
-  //  const totalprice = p1 + p2 + p3 + p4 + p5;
-  //  console.log(totalprice);
-  console.log(Array.isArray(arguments));
-  const validArray = Array.from(arguments);
-  console.log(validArray);
-
-  console.log(arguments);
-
-  let total = 0;
-  for (let i = 0; i < arguments.length; i++) {
-    total = total + arguments[i];
-  }
-  console.log(total);
-}
-
-makePrice(10, 20, 30, 40, 50);
-
-function makePrice1(p1, p2, p3, p4, ...rest) {
-  console.log(p1, p2, rest);
-  let total = 0;
-  for (let i = 0; i < rest.length; i++) {
-    total = total + arguments[i];
-  }
-  console.log(total);
-}
-
-makePrice1(10, 20, 30, 40, 50, 60, 70, 80);
-
-// function return value (emplicit ---> undefined) *************************
-
-function makePrice1(p1, p2, p3, p4, ...rest) {
-  console.log(p1, p2, rest);
-  let total = 0;
-  for (let i = 0; i < rest.length; i++) {
-    total = total + arguments[i];
-  }
-  console.log(total);
-  // return;
-}
-
-const total = makePrice1(10, 20, 30, 40, 50, 60, 70, 80);
-console.log(total);
-
-//function are first class function in JS, and they are object *************************
-
-function logParam(param) {
-  console.log(param);
-}
-
-function test() {}
-
-let testExp = function () {};
-
-logParam(1);
-logParam({});
-logParam([]);
-logParam(new Date());
-
-logParam(test);
-logParam(function test2() {});
-logParam(testExp);
-logParam(() => {});
-
-//=========================
-function greet() {
-  console.log("Hi");
-}
-
-greet();
-console.dir(greet);
-
-greet.langugaeofGreet = "english";
-
-greet.whicjLanguageofGreet = function () {
-  console.log("the language of greet is english");
-  //return;  --> Js implicitlty adding this here return undefined
+let amitInformation = {
+  name: "amit",
+  age: 32,
+  getInfo: function () {
+    console.log(this.name, this.age);
+  },
 };
 
-console.log(greet.langugaeofGreet);
-console.log(greet.whicjLanguageofGreet());
-console.log(greet.name);
+let darshanformation = {
+  name: "darshan",
+  age: 25,
+  getInfo: function () {
+    console.log(this.name, this.age);
+  },
+};
 
-///iifes *************************
+myInformation.getInfo();
+amitInformation.getInfo();
+darshanformation.getInfo();
 
-//iife  Immediately Invoked Functions Expressions (IIFEs):=
-/*
-IIFES(imediate invoked function execution statement ):- we can call our function efter juts writing it immediatly, so the purpose of this we can hide or do data privacy using the concept of IIFE. iife is executed only once, there is no concept of reuse the purpose of iife only is data privacy of global execution contecxt so accidently our variable will not be changed because they are only scoped inside the iife.
+let myInformation1 = {
+  name: "sarang jain",
+  age: 35,
+};
 
-    // <script>
-    //   (function () {
-    //     var myName = "sarang jain";
-    //     function one() {
-    //       console.log("one function");
-    //     }
-    //   })();
-    // </script>
-    // <script>
-    //   (function () {
-    //     var myName = "darshan kumar";
-    //     function one() {
-    //       console.log("one function");
-    //     }
-    //   })();
-    // </script>
-    // <script>
-    //   // IIFE Immediatly invoked function expression (IIFES)
-    //   (function () {
-    //     console.log("running");
-    //   })();
+let amitInformation1 = {
+  name: "amit",
+  age: 32,
+};
 
-    //   (function add(a, b) {
-    //     console.log(a + b);
-    //   })(10, 20);
+let darshanformation1 = {
+  name: "darshan",
+  age: 25,
+};
 
-    //   (function () {
-    //     ///--------
-    //   })();
-    // </script>
+function getInfo() {
+  console.log(this.name + this.age);
+}
 
+getInfo.apply(myInformation1);
+getInfo.apply(amitInformation1);
+getInfo.apply(darshanformation1);
 
+let myInformation2 = {
+  name: "sarang jain",
+  age: 35,
+  getInfo() {
+    console.log(this.name + this.age);
+  },
+};
 
-// scopes in jS *********************************************** 
+let amitInformation2 = {
+  name: "amit",
+  age: 32,
+};
 
-//global scope
+let darshanformation2 = {
+  name: "darshan",
+  age: 25,
+};
 
-// scope 1
-let id = "abc";
+myInformation2.getInfo();
 
-function one() {
-  // scope 2
-  let id = "def";
-  console.log(id);
-  two();
-  function two() {
-    // scope 3
-    let id = "xyz";
-    console.log(id);
-    three();
-    function three() {
-      // scope 3
-      let id = "opi";
-      console.log(id);
-    }
+myInformation2.getInfo.call(amitInformation2);
+
+myInformation2.getInfo.apply(darshanformation2);
+
+// genric function for call apply bind
+function iterateArray() {
+  for (let i = 0; i < this.length; i++) {
+    console.log(this[i]);
   }
 }
 
-one();
+let noarr = [1, 2, 3, 4, 5];
+let namearr = ["sarang", "kk", "govind"];
+let objarr = [1, 2, 3];
 
-function test() {
-  return function () {
-    console.log("I am returned function");
-  };
-}
+iterateArray.call(noarr);
+iterateArray.apply(namearr);
+iterateArray.bind(objarr)();
 
-let callTestfn = test();
-console.log(callTestfn);
-console.log(callTestfn());
-
-/* 
-Whats happening there
-callTestfn =  function () {
-    console.log("I am returned function");
-  };
-*/
-
-
-
-// hoisting in javascript ***********************************
-// function closure
-
-/* 
-closure, is the behaviour of function in javascript,
-child functioncan access the property of its parent function , when its parent execution context already poped up from the stack
-*/
-
-function add(param1, param2) {
-  return function (param3) {
-    return function (param4) {
-      console.log(param1 + param2 + param3 + param4);
-    };
-  };
-}
-
-//console.log(add(50, 50)(50)(50));
-
-let addFn = add(50, 50);
-let annyfn1 = addFn(50);
-annyfn1(50);
+/// callback function
 
 /*
-Whats happening there
-add(10, 20)
-function (param3) {
-    return function (param4) {
-      console.log(param1 + param2 + param3 + param4);
-    };
-  };
-
-  add(10, 20)(30)    
-
- return function (param4) {
-      console.log(param1 + param2 + param3 + param4);
-    };
-
-     add(10, 20)(30)(40)
-
-     console.log(param1 + param2 + param3 + param4);
+ when you are calling a function that is call a function call
+ when one function is calling another function , this terminology called a callback function call
 
 */
+
+function sayHello() {
+  console.log("Hello");
+}
+
+sayHello();
+
+function sayHiLater(fn) {
+  console.log(
+    "Here sayHiLater function will call another function, that is called cb"
+  );
+
+  fn();
+}
+
+sayHiLater(function () {
+  console.log("say hello");
+});
+
+var sayHelloAgain = function () {
+  console.log("heyyyyyyyyyyyyy");
+};
+
+sayHiLater(sayHelloAgain);
+
+setTimeout(callBackFunction, 5000);
+
+function callBackFunction() {
+  console.log("i will run after 5 sec");
+}
