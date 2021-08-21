@@ -4,262 +4,265 @@ const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
-// Object in depth
 
-// Object in depth
-// object literal
-const myobj = {};
-console.log(myobj);
 
-const personalInformation = {
+// object propety add and update **********************
+
+let courseTrainer = {
   name: "sarang jain",
-  age: 32,
+  id: "webtrainer",
   phoneNo: 9405034908,
-  isMaried: true,
-  profession: "Teacher",
-  friends: ["kk", "amar", "adarsh"],
-  address: {
-    flatNo: 201,
-    street: "Gwalior",
-    state: "MP",
-    pincode: "411014",
-    landmark: ["jain temple", "gwalior uravai gate"],
-  },
-  getPerdonalInformation: function () {
-    console.log(this.name, this.age, this.phoneNo);
-  },
+  // city: "pune",
+  // currentCOurse: "js",
+  // courseswithfee: { js: 5000, react: 5000, angular: 5000 },
 };
 
-console.log(personalInformation);
+// // add property
+// courseTrainer.city = "pune";
+// courseTrainer.currentCOurse = "js";
+// courseTrainer.courseswithfee = { js: 5000, react: 5000, angular: 5000 };
 
-// using function constructor
-var info1 = new Object();
-console.log(info1);
+// // update
+// courseTrainer.city = "mumbai";
+// courseTrainer.currentCOurse = "javascript";
+// courseTrainer.courseswithfee = { js: 15000, react: 15000, angular: 15000 };
+// courseTrainer.courseswithfee.js = 20000;
 
-var info2 = Object();
-console.log(info2);
+function addorUpdateProperty(propertyName, propertyvalue) {
+  // either add property or update the property
+  courseTrainer[propertyName] = propertyvalue;
+}
 
-console.log(Object(3));
-console.log(Object("sarang"));
-console.log(Object(true));
-console.log(Object([]));
-console.log(Object(() => {}));
+// add property
+addorUpdateProperty("city", "pune");
+addorUpdateProperty("currentCOurse", "js");
+addorUpdateProperty("courseswithfee", { js: 5000, react: 5000, angular: 5000 });
 
-// immutability with object
+// update property
+addorUpdateProperty("city", "mumbai");
+addorUpdateProperty("currentCOurse", "javascript");
+addorUpdateProperty("courseswithfee", {
+  js: 15000,
+  react: 15000,
+  angular: 15000,
+});
+console.log(courseTrainer);
 
-let myInfo = { name: "sarang", age: 30 };
 
-let amitInfo = myInfo;
+// object remove property
 
-console.log(myInfo);
-console.log(amitInfo);
-
-amitInfo.lastname = "bablekar";
-
-console.log(myInfo);
-console.log(amitInfo);
-
-let kkInfo = amitInfo;
-kkInfo.name = "kk";
-
-console.log(myInfo);
-console.log(amitInfo);
-console.log(kkInfo);
-
-// *************Object properties and method value
-let personlInfo = {
-  name: "sarang",
-  age: 30,
-  getInfo: function () {
-    console.log(this.name + this.age);
-  },
-  getInfo1() {
-    console.log(this.name + this.age);
-  },
-  "abc 123": "I am a valid property",
-  100: "i am also a valid property",
+let courseTrainer = {
+  name: "sarang jain",
+  id: "webtrainer",
+  phoneNo: 9405034908,
+  city: "pune",
+  currentCOurse: "js",
+  courseswithfee: { js: 5000, react: 5000, angular: 5000 },
 };
 
-console.log(personlInfo);
+// delete key word , avod if you can
 
-console.log(personlInfo.name);
-console.log(personlInfo.age);
+// delete courseTrainer.city;
+// delete courseTrainer.name;
+// delete courseTrainer.phoneNo;
 
-console.log(personlInfo["abc 123"]);
-console.log(personlInfo["100"]);
+const { id, name, phoneNo, ...updatedCoureeTrainer } = courseTrainer;
 
-// ************Object properties and method value
-let personlInfo = {
-  name: "sarang",
-  age: 30,
-  getInfo: function () {
-    console.log(this.name + this.age);
-  },
-  getInfo1() {
-    console.log(this.name + this.age);
-  },
-  100: "no name property is also valid",
-  "my propery one": "this string is a valid property",
-  "my propery array": [1, 2, 3],
-};
+console.log(courseTrainer);
+console.log(updatedCoureeTrainer);
 
-console.log(personlInfo);
 
-console.log(personlInfo.name);
-console.log(personlInfo.age);
+// spread operator**********************
 
-console.log(personlInfo[100]);
-console.log(personlInfo["100"]);
-console.log(personlInfo["my propery array"][2]);
+console.log("..............Spread operator.......................");
+//let completeInfo = { ...info1, ...info2, ...courseswithfee };
 
-// Object keys and shorthand
+//console.log(completeInfo);
 
-/*
-  whene ever key and value are coming from same variable you can make short object
-  dynamic key , you can cretae key uisng variable like value , but using [] notation
-*/
-
-// let perosnalInfo = {
-//   name: "sarang",
-//   id: 123,
-//   age: 30,
-//   getInfo() {
-//     console.log(this.name, this.id, this.age);
-//   },
+// let courseTrainer = {
+//   name: "sarang jain",
+//   id: "webtrainer",
+//   phoneNo: 9405034908,
+//   city: "pune",
+//   currentCOurse: "js",
+//   courseswithfee: { js: 5000, react: 5000, angular: 5000 },
 // };
 
-// api , progrmattical way you are getting some value
-
-// let myName = "sarang";
-// let myId = "xyz";
-// let myage = 32;
-
-// let perosnalInfo2 = {
-//   name: myName,
-//   id: myId,
-//   age: myage,
-// };
-
-// console.log(perosnalInfo2);
-
-// // shorthand object , key and value are coming from same variable
-
-// let perosnalInfo3 = {
-//   myName, // myName:myName
-//   myId, // myId:myId
-//   myage,
-// };
-
-// console.log(perosnalInfo3);
-
-let myName = "sarang";
-let myId = "xyz";
-let myage = 32;
-
-let mykey = "salary";
-let key = "keyfrom api";
-
-let personInfo5 = {
-  myName,
-  myId,
-  myage: myage,
-  [mykey]: 30000,
-  [key]: "value",
+let courseTrainer1 = {
+  name: "sarang jain",
+  id: "webtrainer",
+  phoneNo: 9405034908,
 };
 
-console.log(personInfo5);
+let courseTrainer2 = {
+  city: "pune",
+  currentCOurse: "js",
+};
+
+let courseswithfee = { js: 5000, react: 5000, angular: 5000 };
+
+let courseTrainerInfo11 = {
+  city: "mumbai",
+  ...courseTrainer1,
+  ...courseTrainer2,
+  courseswithfee,
+};
+
+console.log(courseTrainerInfo11);
+
+
+// ************shallow copy and deep copy
 
 // Object in depth
-// object destructuring
+// How to break refrence
+// object cloning // shallow and deep copy
+console.log("..............shallow copy and deep copy.......................");
 
-// const trainName = courseInformation.trainer;
-// const trainId = courseInformation.id;
-// const fullFees = courseInformation.courseFess.full;
-//console.log(trainName, trainId, fullFees);
-
-// destructuring
-/*
-let { trainer, id, courseFess } = {
-  trainer: "sarang jain",
-  id: "webTrainer",
+let courseTrainer = {
+  name: "sarang jain",
+  id: "webtrainer",
   phoneNo: 9405034908,
   city: "pune",
-  currentCourseName: "Javascript",
-  courseFess: { JS: 5000, react: 5000, full: 10000 },
+  currentCOurse: "js",
+  courseswithfee: { js: 5000, react: 5000, angular: 5000 },
+  address: { strtee: "Gwalior" },
 };
 
-*/
+//let cloneCourseTrainer = courseTrainer;
 
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "webTrainer",
+// cloning using Object.assign ***************
+
+// this will fail on deep level
+//let cloneCourseTrainer = Object.assign({}, courseTrainer);
+
+// shalow
+// cloneCourseTrainer.city = "mumbai";
+// cloneCourseTrainer.currentCOurse = "javascript";
+
+// deep
+// cloneCourseTrainer.courseswithfee.js = 15000;
+
+// cloning using spread concept ***************
+// this will fail on deep level
+//const cloneCourseTrainer = { ...courseTrainer };
+
+//cloneCourseTrainer.city = "mumbai";
+//cloneCourseTrainer.currentCOurse = "javascript";
+
+// deep
+//cloneCourseTrainer.courseswithfee.js = 15000;
+
+// how to break deep linking
+
+let cloneCourseTrainerString = JSON.stringify(courseTrainer);
+let cloneCourseTrainerStringObj = JSON.parse(cloneCourseTrainerString);
+
+cloneCourseTrainerStringObj.city = "Mumbai";
+cloneCourseTrainerStringObj.currentCOurse = "javascript";
+
+//deep
+cloneCourseTrainerStringObj.courseswithfee.js = 15000;
+console.log(courseTrainer);
+console.log(cloneCourseTrainerStringObj);
+
+
+
+// object merging  Object.assign and spread operato **********************************
+
+// let courseTrainer = {
+//   name: "sarang jain",
+//   id: "webtrainer",
+//   phoneNo: 9405034908,
+//   city: "pune",
+//   currentCOurse: "js",
+//   courseswithfee: { js: 5000, react: 5000, angular: 5000 },
+//   address: "201, vimay nagar behing ganesh temple";
+// };
+
+let courseTrainer1 = {
+  name: "sarang jain",
+  id: "webtrainer",
+  phoneNo: 9405034908,
+};
+
+let courseTrainer2 = {
+  city: "pune",
+  currentCOurse: "js",
+};
+
+let courseswithfee = { js: 5000, react: 5000, angular: 5000 };
+
+let courseTrainerInfo11 = {
+  city: "mumbai",
+  ...courseTrainer1,
+  ...courseTrainer2,
+  courseswithfee,
+  address: "201, vimay nagar behing ganesh temple",
+};
+
+let courseTrainerInfo22 = Object.assign({}, courseTrainer1, courseTrainer2, {courseswithfee,});
+
+let courseTrainerInfo33 = Object.assign(
+  {},
+  {
+    name: "sarang jain",
+    id: "webtrainer",
+    phoneNo: 9405034908,
+  },
+  {
+    city: "pune",
+    currentCOurse: "js",
+  },
+  { courseswithfee: { js: 5000, react: 5000, angular: 5000 } }
+);
+
+console.log(courseTrainerInfo11);
+
+console.log(courseTrainerInfo22);
+
+console.log(courseTrainerInfo33);
+
+
+
+// object type checking *****************************
+
+let courseTrainer = {
+  name: "sarang jain",
+  id: "webtrainer",
   phoneNo: 9405034908,
   city: "pune",
-  currentCourseName: "Javascript",
-  courseFess: { JS: 5000, react: 5000, full: 10000 },
+  currentCOurse: "js",
+  courseswithfee: { js: 5000, react: 5000, angular: 5000 },
+  address: "201, vimay nagar behing ganesh temple",
 };
 
-//let { trainer, id, courseFess:{full} } = courseInformation;
+console.log(typeof courseTrainer);
+console.log(courseTrainer instanceof Object);
+console.log(typeof {});
+console.log({} instanceof Object);
 
-// let { trainer, id, courseFess } = courseInformation;
-// let { full } = courseFess;
+console.log(typeof []);
+console.log([] instanceof Object);
+console.log([] instanceof Array);
 
-// console.log(trainer);
-// console.log(id);
-// console.log(courseFess);
-// console.log(full);
+console.log(typeof null);
+console.log(null instanceof Object);
 
-// const id = "xyz";
+console.log(new Object() instanceof Object);
+console.log(new Array() instanceof Object);
+console.log(new Array() instanceof Array);
 
-// const { trainer, id: rename, phoneNo, courseFess, ...rest } = courseInformation;
-
-// console.log(trainer);
-// console.log(id);
-// console.log(rest);
-// console.log(rename);
-
-const { full } = courseInformation.courseFess;
-console.log(full);
-
-const { courseFess } = courseInformation;
-
-const { full: renamefull } = courseFess;
-console.log(renamefull);
-
-// const {
-//   courseFess: { full, react },
-// } = courseInformation;
-// console.log(full, react);
-
-// **************Object property value existence
-
-let courseInformation = {
-  trainer: "sarang jain",
-  id: "web trainer",
-  phoneNo: 9405034908,
-};
-
-console.log(courseInformation);
-
-// property check
-if (courseInformation.id) {
-  // if id exist then so something
+function checkType(context) {
+  const type = Object.prototype.toString.call(context);
+  return type.slice(8, -1);
 }
 
-// property value check
-if (courseInformation.id === "web trainer") {
-  // if id exist then so something
-}
-
-// Object.keys() , Object.values()
-
-// value check
-console.log(Object.values(courseInformation));
-const objectValues = Object.values(courseInformation);
-console.log(objectValues.includes("web trainer"));
-
-// if(Object.values(courseInformation).includes(9405034908)){}
-
-// keys check
-
-console.log(Object.keys(courseInformation).includes("trainer"));
+console.log("...................");
+console.log(checkType({}));
+console.log(checkType([]));
+console.log(checkType(function () {}));
+console.log(checkType(null));
+console.log(checkType(undefined));
+console.log(checkType(new Date()));
+console.log(checkType(5));
+console.log(checkType("sarang"));
