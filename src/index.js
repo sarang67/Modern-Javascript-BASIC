@@ -4,164 +4,264 @@ const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
-// Array in depth
 
+//1)  finding-array-elements *******************************
 
-/************
- *  splice -->
-dlt the element  from array , and if you want to put element instad dlt elemet you can put new element using splice
-// param1 :_index from where you have to start dlt
-// param2 :- count how many no element you want dlt
-// param3 :- insert this item place of deleted item or place of( param1)
+let courses = ["angular", "react", "javascript", "typescript"];
+const findingIndexForJS = courses.indexOf("javascript");
 
-return --> array with dleted item
+if (findingIndexForJS !== -1) {
+  console.log("Js is very important");
+  console.log(courses[findingIndexForJS]);
+}
 
-*/
-//console.log(subject3.splice(0));
-//console.log(subject3.splice(0, 1));
-//console.log(subject3.splice(0, 2));
+console.log(courses.includes("angular"));
 
-//console.log(subject3.splice(1, 1, ["s", "s", "s"]));
+let courseWithId = [
+  {
+    id: 1,
+    name: "JS",
+  },
+  {
+    id: 2,
+    name: "Angular",
+  },
+  {
+    id: 3,
+    name: "react",
+  },
+  {
+    id: 4,
+    name: "vue",
+  },
+];
 
-// add in between using splice
+console.log(courseWithId);
 
+// findIndex  ---like  a indexOf
+// find
 
-/************
- *  slice -->
- * param --> starting index
- * param2 --> ending index
- *
- * slice is immutable
+const index = courseWithId.findIndex(callBackfn);
 
+function callBackfn(element, elementIndex, array) {
+  if (element.name === "vue") {
+    return true;
+  }
+}
 
-Must Read deiffrence between splice and slice method 
-https://www.tothenew.com/blog/javascript-splice-vs-slice/
-https://www.freecodecamp.org/news/lets-clear-up-the-confusion-around-the-slice-splice-split-methods-in-javascript-8ba3266c29ae/
-https://dev.to/capscode/difference-between-slice-and-splice-in-javascript-4ahg
- *
- * */
+console.log(index);
 
+console.log("==================");
+//using short arrow fn
 
+const index2 = courseWithId.findIndex((element, elementIndex) => {
+  if (element.name === "vue") {
+    return true;
+  }
+});
 
+console.log(index2);
 
+const index3 = courseWithId.findIndex((element) => element.name === "vue");
+console.log(index3);
 
-//arrays-add-elements****************************
-/*
+// find
 
-The splice() method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place. To access part of an array without modifying it, see slice().
-
-*/
-/* 
-mutable :- means you are modifying the current or original array.
-
-immutable :- original value can not be disturbed , brand new array wiil be returned.
-
-*/
-
-const subjects = ["JS", "React", "Angular"];
-
-//add in begning Mutable way
-subjects.unshift("Vue");
-
-//add in last Mutable way
-subjects.push("redux");
-
-console.log(subjects);
-
-console.log("------------------------------");
-
-// immutable way
-const subjects1 = ["JS", "React", "Angular"];
-
-//add in begning Mutable way
-console.log(["Vue", ...subjects1]);
-
-//add in last Mutable way
-console.log(["Vue", ...subjects1, "redux"]);
-
-console.log(subjects1);
-console.log("------------------------------");
-
-
-// fisrt demonstrate splice method all the combination.
-
-// param 1 , delt index, second param delte count , thirt what you want to keep on param1 .
-splice(start)
-splice(start, deleteCount)
-splice(start, deleteCount, item1)
-splice(start, deleteCount, item1, item2, itemN)
-
-const subjects2 = ["JS", "React", "Angular"];
-// How to add in between mutable way
-
-subjects2.splice(1, 0, "Vue");
-console.log(subjects2);
-
-console.log("-----------------------------------");
-// How to add in between imutable way
-const subjects3 = ["JS", "React", "Angular", "React"];
-
-console.log([...subjects3.splice(0, 2), "Vue", ...subjects3.splice(0)]);
-
-console.log(subjects3);
+const finditem = courseWithId.find((element) => element.name === "vue");
+console.log(finditem);
 
 
 
-//array-remove*******************
-
-/*
-The slice() method returns a shallow copy of a portion of an array into a new array object 
-selected from begin to end (end not included) where begin and end represent the index of items in that array.
-The original array will not be modified.
-
-console.log(subjects.slice(0));
-console.log(subjects.slice(1));
-console.log(subjects.slice(2));
-console.log("--------------------------");
-console.log(subjects.slice(0, 0));
-console.log(subjects.slice(0, 1));
-console.log(subjects.slice(0, 2));
-
-console.log("--------------------------");
-console.log(subjects.slice(-1));
-console.log(subjects.slice(-2));
-console.log(subjects.slice(-3));
-console.log("--------------------------");
-
-console.log(subjects.slice(0, -1));
-console.log(subjects.slice(0, -2));
 
 
-*/
+//array-shallow-deep-cloning ********************
+// all obje pass by refrence , and mutable
 
-// Array Remove
+let courses = [
+  "angular",
+  ["v9", 5000],
+  "react",
+  ["v16", 5000],
+  "javascript",
+  ["V6", 5000],
+  "typescript",
+  ["V3", 5000],
+];
 
-const subjects = ["JS", "React", "Angular"];
+// problem
+//const coursescopy = courses;
+//coursescopy[0] = "Angular12";
 
-// removing from begnining -- mutatable way
+const courseCLone1 = [...courses];
+courseCLone1[0] = "Angular12";
 
-let removedItem = subjects.shift();
-console.log(removedItem);
-console.log(subjects);
+const courseCLone2 = courses.slice();
+courseCLone2[0] = "Angular13";
 
-// removing from ending -- mutable way
+const courseCLone3 = Array.from(courses);
+courseCLone3[0] = "Angular14";
 
-const subjects2 = ["JS", "React", "Angular"];
-const removedlast = subjects2.pop();
+// deep problem*
+//courseCLone1[1][0] = "v13";
 
-console.log(subjects2);
-console.log(removedlast);
+const courseCLone4String = JSON.stringify(courses);
+const courseCLone4ParseObj = JSON.parse(courseCLone4String);
 
-// remove from anywhere immutable way using slice method
-// so make your mind and you can remove anything using slice method
-const subjects3 = ["JS", "React", "Angular", "redux"];
+console.log(courseCLone4ParseObj);
 
-// remove first element
-console.log([...subjects3.slice(1)]);
-// remove last element
-console.log([...subjects3.slice(0, subjects3.length - 1)]);
+courseCLone4ParseObj[0] = "angularchage";
+courseCLone4ParseObj[1][0] = "V12";
 
-// remove from enywhere
-const index = 2;
+console.log(courseCLone4ParseObj);
+// console.log(courseCLone1);
+// console.log(courseCLone2);
+// console.log(courseCLone3);
+// console.log(courses);
 
-console.log([...subjects3.slice(0, index), ...subjects3.slice(index + 1)]);
+
+// merging-arrays******************
+
+let courses = [
+  ["angular", 5000],
+  ["react", 5000],
+  ["javascript", 5000],
+  ["typescript", 5000],
+];
+
+let courseVue = ["vue", 5000];
+let courseNode = ["node", 5000];
+
+// traditional way , immutable way
+
+const mergeCourse = courses.concat([courseVue], [courseNode]);
+//console.log(mergeCourse);
+
+const mergeCourse1 = [...[courseNode], ...courses, ...[courseVue]];
+
+console.log(mergeCourse1);
+console.log(courses);
+
+
+//array-reverse-sort**********************
+
+let courses = ["angular", "react", "javascript", "typescript"];
+console.log(courses.reverse());
+
+console.log(courses);
+
+const numbers = [9, 8, 7, 5, 12, 10];
+
+let courses2 = ["typescript", "angular", "react", "javascript"];
+
+console.log(numbers.sort());
+
+console.log(courses2.sort());
+
+console.log("--------------------------------");
+
+const numbers2 = [9, 8, 7, 5, 12, 10];
+
+numbers2.sort((a, b) => {
+  console.log(a, b);
+  return b - a;
+});
+
+console.log(numbers2);
+
+console.log("--------------------------------");
+
+let courseswithId = [
+  { id: 18, name: "angular" },
+  { id: 28, name: "react" },
+  { id: 3, name: "javascript" },
+  { id: 45, name: "typescript" },
+];
+
+courseswithId.sort((a, b) => {
+  return b.id - a.id;
+});
+
+console.log(courseswithId);
+
+
+//arrays-type-checking****************************
+
+console.log(typeof []);
+console.log([] instanceof Array);
+console.log(new Array() instanceof Array);
+console.log([] instanceof Object);
+
+console.log({} instanceof Array);
+console.log({} instanceof Object);
+
+console.log(Object.prototype.toString.call([]));
+
+console.log(Array.isArray([1, 2, 3]));
+console.log(Array.isArray("sarang"));
+
+
+
+
+//array-imperative(step by step)-iteration********************
+
+let courses = ["angular", "react", "javascript", "typescript"];
+
+for (let i = 0; i <= courses.length; i++) {
+  console.log(i);
+  console.log(courses[i]);
+
+  const course = courses[i];
+  if (course === "typescript") {
+    console.log("i want to learn typescript");
+  }
+}
+
+
+
+
+//break and continue******************
+
+// break
+let courses = ["angular", "react", "javascript", "typescript"];
+let counter = 0;
+
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+
+  if (course === "javascript") {
+    console.log("I am only intrested in Javascript");
+    break;
+  }
+    counter++;
+ 
+}
+ console.log(counter);
+
+
+  
+// continue 
+let courses = ["angular", "react", "javascript", "typescript"];
+let counter = 0;
+
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+
+  if (course === "javascript") {
+    console.log("I am only intrested in Javascript");
+    continue;
+  }
+  counter++;
+}
+console.log(counter);
+ 
+
+//iteration-for-of
+
+let courses = ["angular", "react", "javascript", "typescript"];
+
+for (let i = 0; i <= courses.length; i++) {
+  const course = courses[i];
+  if(course) {
+    console.log(course);
+  }
+}
