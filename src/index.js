@@ -5,263 +5,258 @@ app.innerHTML = `
   <h1>Modern JavaScript: Basic</h1>
 `;
 
-//1)  finding-array-elements *******************************
+
+/*
+Array Prototype methods
+ these all methids accpet one callback function
+
+ 1) forEach(callback)  ---> we dont return manually. and function also will not return anything.
+
+ 2) map(callback)      ---> we have to return manually for each item. , brand new array.
+ 3) filter(callback)   ---> we have to return manually for each item. , brand new array.
+
+ 4) reduce(callback)   ---> we have to return manually manually which will give one result (as per our requirement)
+
+ 5) some(callback)     ---> we will not retuen manually, function will return true and false.
+ 6) every(callback)    ---> we will not retuen manually, function will return true and false.
+
+ 7) find(callback)     -->  we will not retuen manually, function will return finidng item.
+ 8)findIndex(callback) -->  we will not retuen manually, function will return finidng item index.
+
+*/
+
 
 let courses = ["angular", "react", "javascript", "typescript"];
-const findingIndexForJS = courses.indexOf("javascript");
 
-if (findingIndexForJS !== -1) {
-  console.log("Js is very important");
-  console.log(courses[findingIndexForJS]);
-}
-
-console.log(courses.includes("angular"));
-
-let courseWithId = [
-  {
-    id: 1,
-    name: "JS",
-  },
-  {
-    id: 2,
-    name: "Angular",
-  },
-  {
-    id: 3,
-    name: "react",
-  },
-  {
-    id: 4,
-    name: "vue",
-  },
-];
-
-console.log(courseWithId);
-
-// findIndex  ---like  a indexOf
-// find
-
-const index = courseWithId.findIndex(callBackfn);
-
-function callBackfn(element, elementIndex, array) {
-  if (element.name === "vue") {
-    return true;
-  }
-}
-
-console.log(index);
-
-console.log("==================");
-//using short arrow fn
-
-const index2 = courseWithId.findIndex((element, elementIndex) => {
-  if (element.name === "vue") {
-    return true;
+courses.forEach((item, index) => {
+  if (item === "angular") {
+    console.log("my fav framework is angular");
   }
 });
-
-console.log(index2);
-
-const index3 = courseWithId.findIndex((element) => element.name === "vue");
-console.log(index3);
-
-// find
-
-const finditem = courseWithId.find((element) => element.name === "vue");
-console.log(finditem);
-
-
-
-
-
-//array-shallow-deep-cloning ********************
-// all obje pass by refrence , and mutable
-
-let courses = [
-  "angular",
-  ["v9", 5000],
-  "react",
-  ["v16", 5000],
-  "javascript",
-  ["V6", 5000],
-  "typescript",
-  ["V3", 5000],
-];
-
-// problem
-//const coursescopy = courses;
-//coursescopy[0] = "Angular12";
-
-const courseCLone1 = [...courses];
-courseCLone1[0] = "Angular12";
-
-const courseCLone2 = courses.slice();
-courseCLone2[0] = "Angular13";
-
-const courseCLone3 = Array.from(courses);
-courseCLone3[0] = "Angular14";
-
-// deep problem*
-//courseCLone1[1][0] = "v13";
-
-const courseCLone4String = JSON.stringify(courses);
-const courseCLone4ParseObj = JSON.parse(courseCLone4String);
-
-console.log(courseCLone4ParseObj);
-
-courseCLone4ParseObj[0] = "angularchage";
-courseCLone4ParseObj[1][0] = "V12";
-
-console.log(courseCLone4ParseObj);
-// console.log(courseCLone1);
-// console.log(courseCLone2);
-// console.log(courseCLone3);
-// console.log(courses);
-
-
-// merging-arrays******************
-
-let courses = [
-  ["angular", 5000],
-  ["react", 5000],
-  ["javascript", 5000],
-  ["typescript", 5000],
-];
-
-let courseVue = ["vue", 5000];
-let courseNode = ["node", 5000];
-
-// traditional way , immutable way
-
-const mergeCourse = courses.concat([courseVue], [courseNode]);
-//console.log(mergeCourse);
-
-const mergeCourse1 = [...[courseNode], ...courses, ...[courseVue]];
-
-console.log(mergeCourse1);
-console.log(courses);
-
-
-//array-reverse-sort**********************
-
-let courses = ["angular", "react", "javascript", "typescript"];
-console.log(courses.reverse());
 
 console.log(courses);
 
-const numbers = [9, 8, 7, 5, 12, 10];
+// function callBack(item, index) {
+//   console.log(item);
+//   console.log(index);
+// }
 
-let courses2 = ["typescript", "angular", "react", "javascript"];
 
-console.log(numbers.sort());
-
-console.log(courses2.sort());
-
-console.log("--------------------------------");
-
-const numbers2 = [9, 8, 7, 5, 12, 10];
-
-numbers2.sort((a, b) => {
-  console.log(a, b);
-  return b - a;
-});
-
-console.log(numbers2);
-
-console.log("--------------------------------");
-
-let courseswithId = [
-  { id: 18, name: "angular" },
-  { id: 28, name: "react" },
-  { id: 3, name: "javascript" },
-  { id: 45, name: "typescript" },
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399 },
+  { id: "🍟", name: "Jumbo Fries", price: 199 },
+  { id: "🥤", name: "Big Slurp", price: 299 },
 ];
 
-courseswithId.sort((a, b) => {
-  return b.id - a.id;
+// let liString = ``;
+// items.forEach((item, index) => {
+//   liString += `<li>${item.id} ${item.name} - ${item.price}</li>`;
+// });
+// app.innerHTML += liString;
+
+// console.log(items);
+
+// traditional way
+let liString2 = ``;
+for (let i = 0; i < items.length; i++) {
+  const item = items[i];
+  liString2 += `<li>${item.id} ${item.name} - ${item.price}</li>`;
+}
+
+app.innerHTML += liString2;
+
+===========================================================
+
+/*
+Array Prototype methods
+ these all methids accpet one callback function
+
+  2) map(callback)      ---> we have to return manually for each item. , brand new array.
+
+*/
+
+// const brandNewValueArry = [1, 2, 3, 4, 5].map((item, index) => {
+//   console.log(item, index);
+//   return {};
+// });
+
+// const brandNewValueArry2 = ["sasa", "sa", "sss", "sss", "ssssss"].map(
+//   (item, index) => {
+//     console.log(item, index);
+//     return item.length;
+//   }
+// );
+
+// console.log(brandNewValueArry);
+// console.log(brandNewValueArry2);
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399 },
+  { id: "🍟", name: "Jumbo Fries", price: 199 },
+  { id: "🥤", name: "Big Slurp", price: 299 },
+];
+
+const JumboFries50 = items.map((item, index) => {
+  if (item.id === "🍟") {
+    return { ...item, price: item.price / 2 };
+  }
+  return item;
 });
 
-console.log(courseswithId);
+console.log(JumboFries50);
+console.log(items);
 
-
-//arrays-type-checking****************************
-
-console.log(typeof []);
-console.log([] instanceof Array);
-console.log(new Array() instanceof Array);
-console.log([] instanceof Object);
-
-console.log({} instanceof Array);
-console.log({} instanceof Object);
-
-console.log(Object.prototype.toString.call([]));
-
-console.log(Array.isArray([1, 2, 3]));
-console.log(Array.isArray("sarang"));
-
-
-
-
-//array-imperative(step by step)-iteration********************
-
-let courses = ["angular", "react", "javascript", "typescript"];
-
-for (let i = 0; i <= courses.length; i++) {
-  console.log(i);
-  console.log(courses[i]);
-
-  const course = courses[i];
-  if (course === "typescript") {
-    console.log("i want to learn typescript");
-  }
-}
-
-
-
-
-//break and continue******************
-
-// break
-let courses = ["angular", "react", "javascript", "typescript"];
-let counter = 0;
-
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-
-  if (course === "javascript") {
-    console.log("I am only intrested in Javascript");
-    break;
-  }
-    counter++;
- 
-}
- console.log(counter);
-
-
-  
-// continue 
-let courses = ["angular", "react", "javascript", "typescript"];
-let counter = 0;
-
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-
-  if (course === "javascript") {
-    console.log("I am only intrested in Javascript");
+const newArr = [];
+for (let i = 0; i < items.length; i++) {
+  const item = items[i];
+  if (item.id === "🍟") {
+    newArr.push({ ...item, price: item.price / 2 });
     continue;
   }
-  counter++;
+  newArr.push(item);
 }
-console.log(counter);
- 
 
-//iteration-for-of
+console.log(newArr);
 
-let courses = ["angular", "react", "javascript", "typescript"];
+===============================================================
+//filter(callback)   ---> we have to return manually for each item. , brand new array.
 
-for (let i = 0; i <= courses.length; i++) {
-  const course = courses[i];
-  if(course) {
-    console.log(course);
+// const value = [true, true, false].filter((item) => Boolean(item));
+// const value2 = [true, true, false].filter(Boolean);
+// console.log(value2);
+
+// const value3 = [1, 2, 3, 4, 5].filter((item) => item < 1);
+// console.log(value3);
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399 },
+  { id: "🍟", name: "Jumbo Fries", price: 199 },
+  { id: "🥤", name: "Big Slurp", price: 299 },
+];
+
+const expensiveItems = items.filter((item) => {
+  if (item.price < 199) {
+    return true;
   }
+});
+
+console.log(expensiveItems);
+
+console.log(items);
+
+=========================================================
+
+//app.innerHTML += "sarang jain";
+
+// 4) reduce(callback)   ---> we have to return manually manually which will give one result (as per our requirement)
+
+// value , index, arr
+// prevValue , currentvalue ,index ,arr
+const value = [1, 2, 3, 4, 5].reduce((prev, next) => {
+  return prev + next;
+}, 10);
+
+console.log(value);
+console.log("=============");
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399 },
+  { id: "🍟", name: "Jumbo Fries", price: 199 },
+  { id: "🥤", name: "Big Slurp", price: 299 },
+];
+
+const finalPrice = items.reduce((prev, next) => {
+  console.log(prev, next);
+  return prev + next.price;
+}, 0);
+
+console.log(finalPrice);
+
+console.log(items);
+
+====================================
+// some(callback)  ---> we will not retuen manually, function will return true and false.
+
+// const value = [1, 2, 3, 4].some((item) => {
+//   console.log(item);
+//   return item > 1;
+// });
+// console.log(value);
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399, offer: false },
+  { id: "🍟", name: "Jumbo Fries", price: 199, offer: false },
+  { id: "🥤", name: "Big Slurp", price: 299, offer: false },
+];
+
+const isOfferCodeApplied = items.some((item) => item.offer);
+
+const totalprice = isOfferCodeApplied
+  ? 500
+  : items.reduce((prev, next) => {
+      return prev + next.price;
+    }, 0);
+
+console.log(totalprice);
+console.log(items);
+
+==========================================
+//every(callback)    ---> we will not retuen manually, function will return true and false.
+
+const value = [false, false, false].every((item) => true);
+console.log(value);
+
+const value2 = [false, false, false].every(Boolean);
+console.log(value);
+console.log(value2);
+
+console.log("===================");
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399, stock: false },
+  { id: "🍟", name: "Jumbo Fries", price: 199, stock: true },
+  { id: "🥤", name: "Big Slurp", price: 299, stock: true },
+];
+
+console.log(items);
+
+const isAllItemInStock = items.every((item) => item.stock);
+
+console.log(isAllItemInStock);
+
+if (!isAllItemInStock) {
+  console.log(`Sorry all items ara not avilable in stock`);
+} else {
+  console.log(`all items are  avilable in stock`);
 }
+
+======================================================
+
+const value = [1, 2, 3, 4, 5].findIndex((item) => true);
+
+const value2 = ["sarang", "darshan", "paras"].findIndex(
+  (item) => item === "hritik"
+);
+console.log(value);
+console.log(value2);
+
+const valu3 = [1, 2, 3, 4, 5].find((item) => item === 5);
+
+const value4 = ["sarang", "darshan", "paras"].find((item) => true);
+
+console.log(valu3);
+console.log(value4);
+
+console.log("=================");
+
+const items = [
+  { id: "🍔", name: "Super Burger", price: 399 },
+  { id: "🍟", name: "Jumbo Fries", price: 199 },
+  { id: "🥤", name: "Big Slurp", price: 299 },
+];
+
+const jumboFrised = items.find((item) => item.id === "🍟");
+console.log(jumboFrised);
+
+const jumboFrisedIndex = items.findIndex((item) => item.id === "🍟");
+console.log(jumboFrisedIndex);
