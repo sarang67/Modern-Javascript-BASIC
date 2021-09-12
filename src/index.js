@@ -6,139 +6,241 @@ app.innerHTML = `
 `;
 
 
-********************2 Object-Oriented Programming********************
+*** Please upgrade the dependencies. ********* using npm install first
 
-1 Procedural Programming
-=========================
-Prcesural programming means no structure , no immutability maintain , no encapsulation no pattern , just whatever your need write accordingly.
+1) prototypes and __proto__ ([[prototype]]), and prototype chain , and inheritance using protype chain
+===========================================================================================
 
-const cart = [];
+A) inheritance using protype chain
+B) prototypes and __proto__([[Prototype]])
+c) prototype chain
 
-const addToCart = (item) => {
-  cart.push(item);
+now how you will use the prototype of function not __proto__
+===========================================
+2) function constructor with new keyword
+3) members and classes
+
+###################################################################################################################
+/*
+A) inheritance using protype chain
+Inheritance means one object can access the properties and method of another object, this terminology called inheritance. 
+We can achieve inheritance in different language by classical way or other ways, but in JavaScript it is archived by only prototypal way. 
+
+B) Prototype and prototype chain.
+Every Object has prototype property , which keep the reference of another object.
+Every JavaScript object has a one prototype property (__proto__), which makes inheritance possible in JavaScript. 
+When a certain method or property is called , the search starts in the object itself first , if it is not found , the Search moves on the object's prototype(__Proto__), its continue until the method or properties is found that is called prototype chain
+
+Never ever use __proto__ property , it is not for us, it is used by JS internally.
+Every function has two prototype property (prototype) and (__prto__).
+Developer will always  use prototype property(prototype) property not prototype(__proto__) property , both has same purpose . 
+The Prototype property(prototype) in function is where we put methods and properties that we want in other object to inherit.
+
+C) Function constructor and new key word
+Constructor, means , it will create something. 
+Function constructor(class) is a blueprint. 
+You can make multiple object(instance) using this blueprint(function constructor/class) by new keyword.
+
+
+function Employee(name , lastName){
+ this.name = name;
+ this.lastName = lastName;
+}
+Employee.prototype.getInfo = function(){return this.name + this.lastName}
+var sarang = new Employee('sarang', "Jain");
+
+When JS compiler see “new keyword” just beside of function call , a new object will be created somewhere in memory, now Employee function executed. inside employee function “this variable”  will be pointing to newly created object in memory(this is the fourth behaviour of this keyword which only work when object is created using new keyword.
+And when function completely executed or called, this function will automatically return that newly created object , so that object will be assigned to sarang variable. we can see here, we are not returning the object but it Employee will automatically will return when it will executed with new keyword.
+
+D) How JS handle __proto__
+
+function Employee(){}
+
+var sarang = new Employee();
+
+// behind the scene JS assign it
+sarang.__proto__ = Employee.prototype;
+
+// so same kind , 
+Employee type function is created by Function constructor .
+Employee.__proto__ = Function.prototype
+  
+// and Function type constructor, is created by
+Function.__proto__ = Object.prototype
+
+// now we reached on base object , so this most parent now, if we search again  we will  get null
+ 							
+Object.__proto__ = null;	
+
+
+*/
+
+***************B) prototypes and __proto__([[Prototype]])***************
+
+
+let myObj = {};
+
+let myArray = [];
+
+let myFunnction = function () {};
+
+console.log(myObj);
+console.log(myObj.__proto__); // base object
+console.log(myObj.__proto__.__proto__); // end null
+
+console.log("----------------");
+console.log(myArray);
+console.log(myArray.__proto__); // base Array
+console.log(myArray.__proto__.__proto__); // base Object
+console.log(myArray.__proto__.__proto__.__proto__); // end null
+
+console.log("----------------");
+console.dir(myFunnction);
+console.dir(myFunnction.__proto__); // base function
+console.dir(myFunnction.__proto__.__proto__); // base Object
+console.dir(myFunnction.__proto__.__proto__.__proto__); // base Object
+
+
+***************c) prototype chain***************
+
+//c) prototype chain, what it does
+
+let obj_1 = {
+  prop1: "I am Property 1",
 };
 
-const removeFromCart = (id) => {
-  const index = cart.findIndex((item) => item.id === id);
-  cart.splice(index, 1);
+
+console.log({}.constructor);
+console.log([].constructor);
+
+function add() {}
+console.log(add.constructor);
+
+let obj_2 = {
+  prop2: "I am Property 2",
 };
 
-let hotDog = { id: "🌭", name: "posh dog", price: 399 };
-
-addToCart(hotDog);
-console.log(cart);
-
-removeFromCart("🌭");
-console.log(cart);
-
-
-02 Object Literals and Encapsulation
-=======================================
-we can make state , and behaviour wrap one place , which is too easy to understand rather than procedure programming.
-
-const cart = {
-  items: [],
-
-  add(item) {
-    this.items.push(item);
-  },
-
-  remove(id) {
-    const index = this.items.findIndex((item) => item.id === id);
-    this.items.splice(index, 1);
-  },
+let obj_3 = {
+  prop3: "I am Property 3",
 };
 
-//console.log(cart);
+obj_1.__proto__ = obj_2;
+obj_2.__proto__ = obj_3;
 
-let hotDog = { id: "🌭", name: "posh dog", price: 399 };
+// console.log(obj_1);
+// console.log(obj_1.prop1);
+// console.log(obj_2);
+// console.log(obj_2.prop2);
+// console.log(obj_3);
+// console.log(obj_3.prop3);
 
-cart.add(hotDog);
-//console.log(cart);
+console.log(obj_1);
+console.log(obj_1.prop1);
+console.log(obj_1.prop2);
+console.log(obj_1.prop3);
+console.log(obj_1.prop4);
 
-cart.remove("🌭");
-console.log(cart);
 
 
-03 Object Literals and Factory Functions (abstraction , and reusability)
-==========================================
-A factory function is a pattern which allow us to construct and return a newly created object. it de=oes not use new keyword like  class or function constructor , but still this gives us every time brand new object.
 
-const createCart = (items = []) => {
-	 // you can do any thing there and based on that construct object and return it
-  return {
-    items,
-    add(item) {
-      this.items.push(item);
-    },
-    remove(id) {
-      const index = this.items.findIndex((item) => item.id === id);
-      this.items.splice(index, 1);
-    },
-  };
+console.log({}.constructor);
+console.log([].constructor);
+
+function add() {}
+console.log(add.constructor);
+
+
+********** function constructor and new keyword , class. blue print ,for abstrction and resusability****************
+
+function Employee(fn, ln, age) {
+  this.firstName = fn;
+  this.lastName = ln;
+  this.age = age;
+
+  // this.setFirstName = function (eName) {
+  //   this.firstName = eName;
+  // };
+
+  // this.getFullName = function () {
+  //   return this.firstName + this.lastName;
+  // };
+
+  return this;
+}
+
+Employee.prototype.setFirstName = function (eName) {
+  this.firstName = eName;
 };
 
-const cart1 = createCart([{ id: "🌭", name: "posh dog", price: 399 }]);
-const miniCart = createCart([
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-]);
-const bigCart = createCart([
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-  { id: "🌭", name: "posh dog", price: 399 },
-]);
-
-console.log(cart1);
-console.log(miniCart);
-console.log(bigCart);
-
-let hotDog = { id: "🌭", name: "posh dog", price: 399 };
-cart1.add(hotDog);
-console.log(cart1);
-
-// problem of muatbality , in this factory  we are getting reusablity ,
-//and abstraction but the problem is our state can be mutated outside
-// that is the big problem there. our state should not be changed from outside
-
-cart1.items.splice(0, 1);
-console.log(cart1);
-
-04  Frozen State and Immutable Patterns
-======================================
-Here we have solved the problem, where anyonce can not mutate out state , yes here any one can assign any new item , but can not cange existing state means can not be mutated.
-
-const createCart = (items = []) => {
-  return {
-    //items: Object.freeze(items),
-    items,
-    add(item) {
-      //this.items.push(item);
-      const state = [...this.items, item];
-      this.items = Object.freeze(state);
-    },
-    remove(id) {
-      // const index = this.items.findIndex((item) => item.id === id);
-      // this.items.splice(index, 1);
-      const state = this.items.filter((item) => item.id !== id);
-      this.items = Object.freeze(state);
-    },
-  };
+Employee.prototype.getFullName = function () {
+  return this.firstName + this.lastName;
 };
 
-const cart1 = createCart([{ id: "🌭", name: "posh dog", price: 399 }]);
+Employee.prototype.amit = "hureree";
+Employee.prototype.hello = "majo aa gaya";
+Employee.prototype.hurrrrr = "majo aa gayasssssssssss";
 
-let hotDog = { id: "🌭", name: "posh dog", price: 399 };
-cart1.add(hotDog);
+let sarangEmployee = new Employee("sarang", "jain", 30);
+/* behind the scene js will set below thin
+sarangEmployee.__proto__ == Employee.prototype
 
-console.log(cart1);
-//cart1.items.splice(0, 1);
-console.log(Object.isFrozen(cart1.items));
-console.log(cart1);
+*/
+
+let amitEmplo = new Employee("amit", "Bab", 24);
+/* behind the scene js will set below thin
+amitEmplo.__proto__ == Employee.prototype
+
+*/
+
+console.log(sarangEmployee);
+console.log(amitEmplo);
+
+sarangEmployee.setFirstName("sarang kumar");
+console.log(sarangEmployee.getFullName());
+//console.log(amitEmplo.constructor);
+
+//console.log(sarangEmployee.constructor);
+
+//console.log(sarangEmployee instanceof Employee);
+//console.log(amitEmplo instanceof Employee);
+
+
+
+************************** function constructor and new keyword , class. blue print ,for abstrction and resusability******************
+
+// classes if the suger syntax of function constructor
+
+export class Employee2 {
+  // members
+  firstName;
+  lastName;
+  age;
+
+  constructor(fn, ln, age) {
+    // inilizing your members
+    this.firstName = fn;
+    this.lastName = ln;
+    this.age = age;
+  }
+  
+  setFistName(eName) {
+    this.firstName = eName;
+  }
+
+  getFullName() {
+    return this.firstName + this.lastName;
+  }
+}
+
+console.log(typeof Employee2);
+console.dir(Employee2);
+
+let sarangEmployee2 = new Employee2("sarang", "jain", 30);
+/* behind the scene js will set below thin
+sarangEmployee2.__proto__ == Employee.prototype */
+console.log(sarangEmployee2);
+
+sarangEmployee2.firstName = "test";
+// wrongconsole.log(sarangEmployee2);
+
+

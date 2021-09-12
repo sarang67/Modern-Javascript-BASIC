@@ -32,6 +32,7 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "index.html"),
+      favicon: "",
     }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: "async",
