@@ -1,4 +1,3 @@
-import { pitch } from "file-loader";
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
@@ -6,90 +5,44 @@ app.innerHTML = `
   <h1>Modern JavaScript: Advance</h1>
 `;
 
+JS : advanc
+1) inheritance in ES5
+2) inheriatnce using class and extends and what problem this solbe , abstract class
 
-updated above cart to function constructor
-=========================================
+// 1) inheritance in ES5
 
-function Cart(items = []) {
-  this.items = Object.freeze(items);
+function Employee(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
 }
 
-Cart.prototype.add = function (item) {
-  const state = [...this.items, item];
-  this.items = Object.freeze(state);
-};
-Cart.prototype.remove = function (id) {
-  const state = this.items.filter((item) => item.id !== id);
-  this.items = Object.freeze(state);
+Employee.prototype.getFullname = function () {
+  console.log(this.firstName + this.lastName);
 };
 
-const cart = new Cart();
-const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
+// =======================================
 
-cart.add(hotdog);
-console.log(cart);
-
-console.log(cart instanceof Cart)
-
- Classes and Members
-========================
-
-class Cart {
-  items;
-  constructor(items = []) {
-    this.items = Object.freeze(items);
-  }
-  add(item) {
-    const state = [...this.items, item];
-    this.items = Object.freeze(state);
-  }	
-  remove(id) {
-    const state = this.items.filter((item) => item.id !== id);
-    this.items = Object.freeze(state);
-  }
+function EmployeeSal(fn, ln, salary) {
+  Employee.call(this, fn, ln);
+  this.salary = salary;
 }
 
-const cart = new Cart();
-const hotdog = { id: '🌭', name: 'Posh Dog', price: 399 };
+EmployeeSal.prototype = Object.assign(Employee.prototype);
 
-cart.add(hotdog);
-console.log(cart);
+EmployeeSal.prototype.getFullInfo = function () {
+  console.log(this.firstName + this.lastName + this.salary);
+};
 
+let sarangEmp = new EmployeeSal("sarang", "jain", 5000);
 
-
- Private and Static Class Members
-======================================
-
-
-class Cart {
-  
-  static name = "My Cart";
-  
-  #items;
-  constructor(items = []) {
-    this.#items = Object.freeze(items);
-  }
-  add(item) {
-    const state = [...this.#items, item];
-    this.#items = Object.freeze(state);
-  }
-  remove(id) {
-    const state = this.#items.filter(item => item.id !== id);
-    this.#items = Object.freeze(state);
-  }
-}
-
-console.log(Cart.name); // Array.isArray
-
-const cart = new Cart();
-const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
-
-cart.add(hotdog); // [].filter()
-console.log(cart);
+// behind the scene
+// sarangEmp.__proto__ = EmployeeSal.prototype
+console.log(sarangEmp);
+console.log(sarangEmp.getFullInfo());
+console.log(sarangEmp.getFullname());
 
 
-Setters and Getters
-=========================
+//  2) inheriatnce using class and extends and what problem this solbe , abstract class
 
 class Cart {
   #items;
@@ -112,7 +65,61 @@ class Cart {
     this.value = this.value.filter((item) => item.id !== id);
   }
 }
+
+class Product {
+  id;
+  name;
+  price;
+
+  constructor(id, name, price) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+  }
+
+  get displayName() {
+    return this.id + this.name;
+  }
+}
+
+class Food extends Product {
+  extra = [];
+  constructor(id, name, price, extra = []) {
+    super(id, name, price);
+    this.extra = extra;
+  }
+}
+
+class Drink extends Product {
+  size = "";
+  constructor(id, name, price, size) {
+    super(id, name, price);
+    this.size = size;
+  }
+}
+
 const cart = new Cart();
-const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
+
+//const hotdog = { id: "🌭", name: "Posh Dog", price: 399 };
+
+const hotdog = new Food("🌭", "Posh Dog", 399, ["onion"]);
+const burger = new Food("🍔", "super burger", 455, ["onion", "catchup"]);
+const pizza = new Food("🍕", "cheese pizza", 999);
+
+const smallDrink = new Drink("🍾", "small dring", 299, "small");
+const mediumDrink = new Drink("🍷", "small dring", 299, "medium");
+const largeDrink = new Drink("🥂", "large dring", 299, "large");
+
 cart.add(hotdog);
+cart.add(burger);
+cart.add(pizza);
+
+cart.add(smallDrink);
+cart.add(mediumDrink);
+cart.add(largeDrink);
+
 console.log(cart.value);
+
+console.log(largeDrink instanceof Drink);
+console.log(largeDrink instanceof Product);
+
