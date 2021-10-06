@@ -6,111 +6,19 @@ app.innerHTML = `
 `;
 /*
 
-DOMContentLoaded event:-
-=================
-DOMContentLoaded , event is fired our whole html document has been completed to load and parse. it will not wait to to load stylesheet , images amy stylesheet , further js which is being loaded. so meand our complete dom skeltor is loaded and parse then our DOMContent is ready. 
-
-load event:-
-==========
-load event will be fired when all the resources all js , style images , other pages anything are loaded , then only this event will be fired.
-
-document and page load
-=======================
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>DOM</title>
-  </head>
-  <body>
-    <header class="header">
-      <div class="logo">
-        <p class="logo-name">JS-DOM</p>
-      </div>
-    </header>
-
-    <div id="app"></div>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        alert("DOM LOADED");
-      });
-	  
-	    window.addEventListener("DOMContentLoaded", () => {
-        alert("DOM LOADED");
-      });
-
-      window.addEventListener("load", (event) => {
-        alert("page is fully loaded");
-      });
-    </script>
-  </body>
-</html>
+/*
 
 
-//01-dom-nodes-explained
-==================================
-// document
-//console.log(document);
-//console.dir(document);
-
-//html
-//console.log(document.documentElement);
-//console.dir(document.documentElement);
-
-//<head>
-console.dir(document.head);
-//<body>
-console.dir(document.body);
-
-// retrive the constructor name
-console.log(document.body.constructor.name);
-// new HTMLBodyElement();
-
-console.log(document.body instanceof HTMLBodyElement);
-console.log(document.body instanceof HTMLElement);
-console.log(document.body instanceof Element);
-console.log(document.body instanceof Node);
-console.log(document.body instanceof EventTarget);
-
-/* Node Type
-https://www.w3schools.com/jsref/prop_node_nodetype.asp
-1	Element	
-2	Attr	
-3	Text	
-4	CDATASection	
-5	EntityReference	
-6	Entity	
-7	ProcessingInstruction	
-8	Comment	
-9	Document	
-10	DocumentType	
-11 	DocumentFragment	
-12	Notation
-
-
-//Node Type
-console.log(document.body.nodeType);
-console.log(document.nodeType);
-
-//nodename
-console.log(document.body.nodeName);
-
-//tageName
-console.log(document.body.tagName);
-
-console.log(document.nodeName);
-console.log(document.tagName);
-
-
-02-creating-dom-elements
+1) creating dom elements
 ========================
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 
-/*
- app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-`;
+
+// app.innerHTML = `
+//  <h1>JavaScript DOM</h1>
+//`;
 
 
 console.log(app);
@@ -125,5 +33,125 @@ app.append(myCommnet);
 app.append(myDiv);
 
 myDiv.append(myTextNode);
+
+
+2) changing dom node contents
+================================
+import "../assets/css/style.css";
+
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+`;
+
+// setter dom content......
+console.log(app);
+
+//app.innerText = "<h1>JavaScript DOM</h1>";
+
+let h1Tag = document.createElement("h1");
+h1Tag.innerText = "This is Dom class";
+
+//later   // h1Tag.style.display = "none";
+//later  // h1Tag.innerText += " This is Fun class";
+
+app.append(h1Tag);
+
+// getter dom content......
+
+// gives the full html visible or onvisible.
+console.log(app.innerHTML);
+// give the text , remove whitespaces. only return visible text
+// applies on Elements
+console.log(app.innerText);
+// give the full text (visible or invisible), inclusing whitespaces etc
+// aplies on nodes
+console.log(app.textContent);
+
+
+3 innerHTML(using literal string) versus createelement (using dom createEelement):-
+===============================================================================
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+`;
+
+// using dom createElement
+function createInputElem({ label, type = "text" }) {
+  const labelElem = document.createElement("label"); //<label></label>;
+  const inputElem = document.createElement("input"); //<input />
+
+  inputElem.type = type; //<input type="text"/>
+  labelElem.innerText = label; // <label>First Name:</label>;
+
+  labelElem.append(inputElem); // <label>First Name: <input type="text"/></label>;
+
+  return labelElem;
+}
+
+const nameField = createInputElem({ label: "First Name:", type: "text" });
+app.append(nameField);
+
+// usning string literal
+function createInputElem2({ label, type = "text" }) {
+  return `
+   <label>
+       ${label} 
+      <input type="${type}"/>
+  </label>
+  `;
+}
+
+const emailField = createInputElem2({ label: "Email ID:", type: "email" });
+app.innerHTML += emailField;
+
+
+
+4 inserting dom elements
+===========================
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+`;
+
+const div = document.createElement("div");
+const span = document.createElement("span");
+const p = document.createElement("p");
+const i = document.createElement("i");
+const b = document.createElement("b");
+
+div.append(p);
+div.prepend(span);
+div.prepend("sarang");
+
+// modern way
+//p.before(i);
+//p.after(b);
+
+// old way to do after before
+
+//p.parentNode.insertBefore(i, p);
+//p.parentNode.insertBefore(b, p.nextSibling);
+console.log(div, p, i, b);
+
+
+
+5 inserting template string to html templates
+===============================
+
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <ul id="myUL">
+   <li>1</li>
+  </ul>
+`;
+
+const ulElement = document.getElementById("myUL");
+
+ulElement.insertAdjacentHTML("beforebegin", "<p>My Unordered list Start</p>");
+ulElement.insertAdjacentHTML("afterbegin", "<li>My first list</li>");
+ulElement.insertAdjacentHTML("beforeend", "<li>My last list</li>");
+ulElement.insertAdjacentHTML("afterend", "<p>My Unordered list Start</p>");
 
 */
