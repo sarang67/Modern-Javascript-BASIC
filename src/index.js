@@ -4,154 +4,180 @@ const app = document.getElementById("app");
 app.innerHTML = `
   <h1>Modern JavaScript: DOM</h1>
 `;
-/*
 
 /*
 
+1) replacing-dom-elements
+2) cloning-dom-elements
+3) removing-dom-elements
+4) document-fragments
 
-1) creating dom elements
-========================
-import "../assets/css/style.css";
+*****Querying and Traversing the DOM*****************************
 
-const app = document.getElementById("app");
-
-
-// app.innerHTML = `
-//  <h1>JavaScript DOM</h1>
-//`;
-
-
-console.log(app);
-
-const myDiv = document.createElement("div");
-const myTextNode = document.createTextNode("JavaScript DOM");
-const myCommnet = document.createComment("there is no commnet");
-
-console.log(myDiv);
-
-app.append(myCommnet);
-app.append(myDiv);
-
-myDiv.append(myTextNode);
-
-
-2) changing dom node contents
-================================
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-`;
-
-// setter dom content......
-console.log(app);
-
-//app.innerText = "<h1>JavaScript DOM</h1>";
-
-let h1Tag = document.createElement("h1");
-h1Tag.innerText = "This is Dom class";
-
-//later   // h1Tag.style.display = "none";
-//later  // h1Tag.innerText += " This is Fun class";
-
-app.append(h1Tag);
-
-// getter dom content......
-
-// gives the full html visible or onvisible.
-console.log(app.innerHTML);
-// give the text , remove whitespaces. only return visible text
-// applies on Elements
-console.log(app.innerText);
-// give the full text (visible or invisible), inclusing whitespaces etc
-// aplies on nodes
-console.log(app.textContent);
-
-
-3 innerHTML(using literal string) versus createelement (using dom createEelement):-
-===============================================================================
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-`;
-
-// using dom createElement
-function createInputElem({ label, type = "text" }) {
-  const labelElem = document.createElement("label"); //<label></label>;
-  const inputElem = document.createElement("input"); //<input />
-
-  inputElem.type = type; //<input type="text"/>
-  labelElem.innerText = label; // <label>First Name:</label>;
-
-  labelElem.append(inputElem); // <label>First Name: <input type="text"/></label>;
-
-  return labelElem;
-}
-
-const nameField = createInputElem({ label: "First Name:", type: "text" });
-app.append(nameField);
-
-// usning string literal
-function createInputElem2({ label, type = "text" }) {
-  return `
-   <label>
-       ${label} 
-      <input type="${type}"/>
-  </label>
-  `;
-}
-
-const emailField = createInputElem2({ label: "Email ID:", type: "email" });
-app.innerHTML += emailField;
+5) querying-dom-nodes-htmlcollections  :- it always give live collection/condition. (getElementById, getElementsByClassName,getElementsByTagName)
+6) querying-dom-nodes-nodelist :- it will give snapshot condition not live condition. (queruselector , queryselectorAll)
 
 
 
-4 inserting dom elements
-===========================
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-`;
+
+//1  replacing-dom-elements
+
+const divElem = document.getElementById("divElem");
+
+const newDIv = document.createElement("div");
+newDIv.innerText = "i have replaced the text";
+
+setTimeout(() => {
+  // modern api to replace
+  divElem.replaceWith(newDIv);
+}, 2000);
+
+const anotherDiv = document.createElement("div");
+anotherDiv.innerText = "i have replaced the text again and again !!!";
+
+setTimeout(() => {
+  // modern api to replace
+  newDIv.parentNode.replaceChild(anotherDiv, newDIv);
+}, 5000);
+
+console.log(divElem, newDIv);
+
+
+// cloning-dom-elements
 
 const div = document.createElement("div");
 const span = document.createElement("span");
-const p = document.createElement("p");
-const i = document.createElement("i");
-const b = document.createElement("b");
+span.innerText = "can ypu clone me ?";
 
-div.append(p);
-div.prepend(span);
-div.prepend("sarang");
+div.append(span);
+console.log(div);
 
-// modern way
-//p.before(i);
-//p.after(b);
+const clone = div.cloneNode(false);
+console.log(clone);
 
-// old way to do after before
+const cloneDeep = div.cloneNode(true);
+console.log(cloneDeep);
 
-//p.parentNode.insertBefore(i, p);
-//p.parentNode.insertBefore(b, p.nextSibling);
-console.log(div, p, i, b);
+app.append(div);
+app.append(clone);
+app.append(cloneDeep);
 
 
+==================
+// 3 removing-dom-elements
 
-5 inserting template string to html templates
-===============================
+const div = document.createElement("div");
+div.innerText = "I am a message";
+app.append(div);
 
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <ul id="myUL">
-   <li>1</li>
-  </ul>
-`;
+// setTimeout(() => {
+//   // new api to remove the nodes.
+//   div.remove();
+// }, 5000);
 
-const ulElement = document.getElementById("myUL");
+setTimeout(() => {
+  // old to remove the nodes.
+  div.parentNode.removeChild(div);
+}, 5000);
 
-ulElement.insertAdjacentHTML("beforebegin", "<p>My Unordered list Start</p>");
-ulElement.insertAdjacentHTML("afterbegin", "<li>My first list</li>");
-ulElement.insertAdjacentHTML("beforeend", "<li>My last list</li>");
-ulElement.insertAdjacentHTML("afterend", "<p>My Unordered list Start</p>");
+
+// 5 document-fragments
+
+const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
+
+const fragment = document.createDocumentFragment();
+
+console.dir(fragment);
+
+names.forEach((name) => {
+  const listItem = document.createElement("li");
+  listItem.innerText = name;
+  fragment.append(listItem);
+});
+
+console.log(fragment);
+app.append(fragment);
+
+//console.log(fragment.nodeName);
+//console.dir(fragment);
+
+
+================================
+
+//*****Querying and Traversing the DOM*****************************
+
+const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
+
+const fragment = document.createDocumentFragment();
+
+names.forEach((name) => {
+  const listItem = document.createElement("li");
+  listItem.textContent = name;
+  listItem.className = "li-list";
+  fragment.append(listItem);
+});
+
+// 1 getElementByID : HTMLElement
+const ulElement = document.getElementById("ulElem");
+ulElement.append(fragment);
+console.log(ulElement);
+console.dir(ulElement);
+
+// 2 getElementBYClassName : HTMLCollectionOf<Element> ;
+const listItemByClassName = ulElement.getElementsByClassName("li-list");
+console.log(listItemByClassName);
+
+// 3 getElementBYTagName :HTMLCollection
+const listItemByTagName = ulElement.getElementsByTagName("li");
+console.log(listItemByTagName);
+
+const newFriend = `<li class="li-list">sameer</li>`;
+
+ulElement.innerHTML += newFriend;
+
+console.log("----------------------");
+console.log(listItemByClassName);
+console.log(listItemByTagName);
+
+
+// querying-dom-nodes-nodelist
+
+const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
+
+const fragment = document.createDocumentFragment();
+
+names.forEach((name) => {
+  const listItem = document.createElement("li");
+  listItem.textContent = name;
+  listItem.className = "li-list";
+  fragment.append(listItem);
+});
+
+// querySelector you can use any valid css selector
+const ulElem = document.querySelector("ul");
+ulElem.append(fragment);
+console.log(ulElem);
+
+//querySelectorAll : nodeList
+const ulElementbyQSA = ulElem.querySelectorAll(".li-list");
+console.log(ulElementbyQSA);
+
+const newFriend = `<li class="li-list">sameer</li>`;
+
+ulElem.innerHTML += newFriend;
+
+console.log("-------------------");
+
+console.log(ulElementbyQSA);
+
+const newquery = ulElem.querySelectorAll(".li-list");
+console.log(newquery);
+
+const newFriend1 = `<li class="li-list">akash</li>`;
+
+ulElem.innerHTML += newFriend1;
+
+console.log(ulElementbyQSA);
+console.log(newquery);
 
 */
