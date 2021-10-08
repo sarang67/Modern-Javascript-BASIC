@@ -5,179 +5,154 @@ app.innerHTML = `
   <h1>Modern JavaScript: DOM</h1>
 `;
 
-/*
+// 1) looping dom element
+// 2) finding child element
+// 3) find the parent element
+// 4) finding sibling element
+// =============================
+// Attribute , styles and classes
+// 1) html attributes vs js properties
+// 2) setting  or getting html attributes
 
-1) replacing-dom-elements
-2) cloning-dom-elements
-3) removing-dom-elements
-4) document-fragments
+// =============================================
+// //1) looping dom element
 
-*****Querying and Traversing the DOM*****************************
+// const ulLiElementList = document.querySelectorAll(".li-list");
+// console.log(ulLiElementList);
 
-5) querying-dom-nodes-htmlcollections  :- it always give live collection/condition. (getElementById, getElementsByClassName,getElementsByTagName)
-6) querying-dom-nodes-nodelist :- it will give snapshot condition not live condition. (queruselector , queryselectorAll)
+// console.log("=== fior loop====");
+// for (let i = 0; i < ulLiElementList.length; i++) {
+//   console.log(ulLiElementList[i]);
+//   console.dir(ulLiElementList[i]);
+// }
 
+// console.log("=== for .. of====");
+// for (let item of ulLiElementList) {
+//   console.log(item);
+//   console.dir(item);
+// }
 
+// console.log("=== convert in valid array object from iterable type object====");
+// [...ulLiElementList].forEach((item) => console.log(item));
 
-
-//1  replacing-dom-elements
-
-const divElem = document.getElementById("divElem");
-
-const newDIv = document.createElement("div");
-newDIv.innerText = "i have replaced the text";
-
-setTimeout(() => {
-  // modern api to replace
-  divElem.replaceWith(newDIv);
-}, 2000);
-
-const anotherDiv = document.createElement("div");
-anotherDiv.innerText = "i have replaced the text again and again !!!";
-
-setTimeout(() => {
-  // modern api to replace
-  newDIv.parentNode.replaceChild(anotherDiv, newDIv);
-}, 5000);
-
-console.log(divElem, newDIv);
+// Array.from(ulLiElementList).forEach((item) => console.log(item));
 
 
-// cloning-dom-elements
+// ===
+// // finding child element
 
-const div = document.createElement("div");
-const span = document.createElement("span");
-span.innerText = "can ypu clone me ?";
-
-div.append(span);
-console.log(div);
-
-const clone = div.cloneNode(false);
-console.log(clone);
-
-const cloneDeep = div.cloneNode(true);
-console.log(cloneDeep);
-
-app.append(div);
-app.append(clone);
-app.append(cloneDeep);
+// app.innerHTML = `
+//   <h1>Modern JavaScript: DOM</h1>
+//   <ul id="elElem" class="ul=list">
+//        <li class="li-list">Sarang</li>
+//        <li class="li-list">amit</li>
+//        <li class="li-list">sudhanshu</li>
+//        <li class="li-list">adarsh</li>
+//        <li class="li-list">nikhil</li>
+// </ul>
+// `;
 
 
-==================
-// 3 removing-dom-elements
+// const ulElement = document.querySelector("#elElem");
+// const liELement = ulElement.querySelectorAll(".li-list");
 
-const div = document.createElement("div");
-div.innerText = "I am a message";
-app.append(div);
+// console.log("======children, childNodes ==================");
+// console.log(ulElement.children);
+// console.log(ulElement.childNodes);
 
-// setTimeout(() => {
-//   // new api to remove the nodes.
-//   div.remove();
-// }, 5000);
+// console.log("======first, last ==================");
+// console.log(ulElement.firstChild);
+// console.log(ulElement.lastChild);
 
-setTimeout(() => {
-  // old to remove the nodes.
-  div.parentNode.removeChild(div);
-}, 5000);
+// console.log("======firstElement, lastElement ==================");
+// console.log(ulElement.firstElementChild);
+// console.log(ulElement.lastElementChild);
 
 
-// 5 document-fragments
+// ===
+// // find the parent element
+// app.innerHTML = `
+//   <h1>Modern JavaScript: DOM</h1>
+//   <div class="item"></div>
+// `;
 
-const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
-
-const fragment = document.createDocumentFragment();
-
-console.dir(fragment);
-
-names.forEach((name) => {
-  const listItem = document.createElement("li");
-  listItem.innerText = name;
-  fragment.append(listItem);
-});
-
-console.log(fragment);
-app.append(fragment);
-
-//console.log(fragment.nodeName);
-//console.dir(fragment);
+// const myDIv = document.querySelector(".item");
+// // find the parent element
+// console.log(app.parentNode); // body
+// console.log(app.parentNode.parentNode); // html
+// console.log(app.parentNode.parentNode.parentNode); // document
 
 
-================================
 
-//*****Querying and Traversing the DOM*****************************
+// console.log(app.parentElement);
+// console.log(app.parentElement.parentElement);
+// console.log(app.parentElement.parentElement.parentElement); // enull
 
-const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
+// // closest
+// console.log(myDIv.closest("body"));
 
-const fragment = document.createDocumentFragment();
+// const app = document.getElementById("app");
+// app.innerHTML = `
+//   <h1>Modern JavaScript: DOM</h1>
+//   <ul id="elElem" class="ul=list">
+//       <li class="li-list">Sarang</li>
+//       <li class="li-list">amit</li>
+//       <li class="li-list">sudhanshu</li>
+//       <li class="li-list">adarsh</li>
+//       <li class="li-list">nikhil</li>
+// </ul>
+// `;
 
-names.forEach((name) => {
-  const listItem = document.createElement("li");
-  listItem.textContent = name;
-  listItem.className = "li-list";
-  fragment.append(listItem);
-});
+// //4) finding sibling element
+// const list = document.querySelector("#elElem li");
 
-// 1 getElementByID : HTMLElement
-const ulElement = document.getElementById("ulElem");
-ulElement.append(fragment);
-console.log(ulElement);
-console.dir(ulElement);
+// console.log(list);
 
-// 2 getElementBYClassName : HTMLCollectionOf<Element> ;
-const listItemByClassName = ulElement.getElementsByClassName("li-list");
-console.log(listItemByClassName);
+// // any dom nodes
+// console.log(list.nextSibling);
+// console.log(list.nextElementSibling);
 
-// 3 getElementBYTagName :HTMLCollection
-const listItemByTagName = ulElement.getElementsByTagName("li");
-console.log(listItemByTagName);
+// console.log(list.previousSibling);
+// console.log(list.previousElementSibling);
 
-const newFriend = `<li class="li-list">sameer</li>`;
+// ==================Attribute , styles and classes==================
 
-ulElement.innerHTML += newFriend;
+// //1) html attributes vs js properties
 
-console.log("----------------------");
-console.log(listItemByClassName);
-console.log(listItemByTagName);
+// const myInput = document.querySelector("input");
+// console.log(myInput);
+// console.dir(myInput);
+// // setter
+// myInput.value = 5;
+
+// // getter
+// console.log(myInput.value);
+// myInput.setAttribute("value", 5);
 
 
-// querying-dom-nodes-nodelist
 
-const names = ["sarang", "amit", "adarsh", "sudhanshu", "bhushan"];
 
-const fragment = document.createDocumentFragment();
+// //Attribute, properties , styles and classes
 
-names.forEach((name) => {
-  const listItem = document.createElement("li");
-  listItem.textContent = name;
-  listItem.className = "li-list";
-  fragment.append(listItem);
-});
+// //  setting  or getting html attributes
 
-// querySelector you can use any valid css selector
-const ulElem = document.querySelector("ul");
-ulElem.append(fragment);
-console.log(ulElem);
+// app.innerHTML = `
+//   <h1>Modern JavaScript: DOM</h1>
+//   <button data-test="sarangjain" >
+//       CLose Me
+//   </button>
+// `;
 
-//querySelectorAll : nodeList
-const ulElementbyQSA = ulElem.querySelectorAll(".li-list");
-console.log(ulElementbyQSA);
 
-const newFriend = `<li class="li-list">sameer</li>`;
+// const myBTN = document.querySelector("button");
+// console.log(myBTN);
+// console.dir(myBTN);
 
-ulElem.innerHTML += newFriend;
+// myBTN.setAttribute("data-test", "amit B");
+// console.log(myBTN.getAttribute("data-test"));
 
-console.log("-------------------");
+// myBTN.setAttribute("aria-label", "please close the popup");
+// console.log(myBTN.getAttribute("aria-label"));
+// console.log(myBTN.getAttribute("aria-label"));
 
-console.log(ulElementbyQSA);
-
-const newquery = ulElem.querySelectorAll(".li-list");
-console.log(newquery);
-
-const newFriend1 = `<li class="li-list">akash</li>`;
-
-ulElem.innerHTML += newFriend1;
-
-console.log(ulElementbyQSA);
-console.log(newquery);
-
-*/
+// console.log(myBTN.attributes["aria-label"]);
