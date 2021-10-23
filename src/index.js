@@ -2,157 +2,160 @@ import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 app.innerHTML = `
-  <h1>Modern JavaScript: DOM</h1>
+   <h1>Modern JavaScript: DOM</h1>
+  `;
+
+/*
+03-setting-getting-inline-styles
+=================================
+import "../assets/css/style.css";
+
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <button type="button" >Click Me</button>
 `;
 
-// 1) looping dom element
-// 2) finding child element
-// 3) find the parent element
-// 4) finding sibling element
-// =============================
-// Attribute , styles and classes
-// 1) html attributes vs js properties
-// 2) setting  or getting html attributes
+//style="padding:20px; font-size:20; color:red; border-left:2px solid green"
+const btn = document.querySelector("button");
+console.dir(btn.style);
 
-// =============================================
-// //1) looping dom element
+btn.style.cssText =
+  "padding:20px; font-size:20px; color:red; border-left:2px solid green";
 
-// const ulLiElementList = document.querySelectorAll(".li-list");
-// console.log(ulLiElementList);
-
-// console.log("=== fior loop====");
-// for (let i = 0; i < ulLiElementList.length; i++) {
-//   console.log(ulLiElementList[i]);
-//   console.dir(ulLiElementList[i]);
-// }
-
-// console.log("=== for .. of====");
-// for (let item of ulLiElementList) {
-//   console.log(item);
-//   console.dir(item);
-// }
-
-// console.log("=== convert in valid array object from iterable type object====");
-// [...ulLiElementList].forEach((item) => console.log(item));
-
-// Array.from(ulLiElementList).forEach((item) => console.log(item));
+btn.style.padding = "30px";
+btn.style.fontSize = "30px";
+btn.style.color = "yellow";
+btn.style.borderLeft = "5px solid green";
 
 
-// ===
-// // finding child element
+04-setting-getting-classes-classlist
+=====================================
+import "../assets/css/style.css";
 
-// app.innerHTML = `
-//   <h1>Modern JavaScript: DOM</h1>
-//   <ul id="elElem" class="ul=list">
-//        <li class="li-list">Sarang</li>
-//        <li class="li-list">amit</li>
-//        <li class="li-list">sudhanshu</li>
-//        <li class="li-list">adarsh</li>
-//        <li class="li-list">nikhil</li>
-// </ul>
-// `;
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <button type="button" class="one two">
+      Click Me !!
+  </button>
+`;
 
+const button = document.querySelector("button");
 
-// const ulElement = document.querySelector("#elElem");
-// const liELement = ulElement.querySelectorAll(".li-list");
+// old way set class
+button.className += " three";
 
-// console.log("======children, childNodes ==================");
-// console.log(ulElement.children);
-// console.log(ulElement.childNodes);
+// old wau get class
+console.log(button.className);
 
-// console.log("======first, last ==================");
-// console.log(ulElement.firstChild);
-// console.log(ulElement.lastChild);
+console.log(button.className.split(" "));
+console.log(button);
 
-// console.log("======firstElement, lastElement ==================");
-// console.log(ulElement.firstElementChild);
-// console.log(ulElement.lastElementChild);
+//new way classList
 
+button.classList.add("four");
+button.classList.remove("one");
 
-// ===
-// // find the parent element
-// app.innerHTML = `
-//   <h1>Modern JavaScript: DOM</h1>
-//   <div class="item"></div>
-// `;
+button.classList.toggle("six");
 
-// const myDIv = document.querySelector(".item");
-// // find the parent element
-// console.log(app.parentNode); // body
-// console.log(app.parentNode.parentNode); // html
-// console.log(app.parentNode.parentNode.parentNode); // document
+setTimeout(() => {
+  button.classList.toggle("six");
+}, 2500);
+
+button.classList.remove("one", "nine");
 
 
+********************** Events and Event Listeners******************************************
+// 01-adding-event-listeners
 
-// console.log(app.parentElement);
-// console.log(app.parentElement.parentElement);
-// console.log(app.parentElement.parentElement.parentElement); // enull
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <button>Click me</button>
+`;
 
-// // closest
-// console.log(myDIv.closest("body"));
+const btn = document.querySelector("button");
+console.dir(btn);
 
-// const app = document.getElementById("app");
-// app.innerHTML = `
-//   <h1>Modern JavaScript: DOM</h1>
-//   <ul id="elElem" class="ul=list">
-//       <li class="li-list">Sarang</li>
-//       <li class="li-list">amit</li>
-//       <li class="li-list">sudhanshu</li>
-//       <li class="li-list">adarsh</li>
-//       <li class="li-list">nikhil</li>
-// </ul>
-// `;
+// Avoid it does not allow multiple events
+// btn.onclick = function () {
+//   console.log("i am clicked");
+// };
 
-// //4) finding sibling element
-// const list = document.querySelector("#elElem li");
+// btn.onclick = function () {
+//   console.log("i am clicked again");
+// };
 
-// console.log(list);
+// btn.onfocus = function () {
+//   console.log("I am focused");
+// };
 
-// // any dom nodes
-// console.log(list.nextSibling);
-// console.log(list.nextElementSibling);
+// btn.onblur = function () {
+//   console.log("I am blurred");
+// };
 
-// console.log(list.previousSibling);
-// console.log(list.previousElementSibling);
+// btn.oncopy = function () {
+//   console.log("I am copied");
+// };
 
-// ==================Attribute , styles and classes==================
+function handleClick(event) {
+  console.log(event);
+  console.log(this);
+  console.log(event.target);
+  //console.log("I am handle clicked");
+}
 
-// //1) html attributes vs js properties
+btn.addEventListener("click", handleClick);
+// btn.addEventListener("click", function () {
+//   console.log("i am handle clicked twice");
+// });
 
-// const myInput = document.querySelector("input");
-// console.log(myInput);
-// console.dir(myInput);
-// // setter
-// myInput.value = 5;
+// arrow function
 
-// // getter
-// console.log(myInput.value);
-// myInput.setAttribute("value", 5);
-
-
-
-
-// //Attribute, properties , styles and classes
-
-// //  setting  or getting html attributes
-
-// app.innerHTML = `
-//   <h1>Modern JavaScript: DOM</h1>
-//   <button data-test="sarangjain" >
-//       CLose Me
-//   </button>
-// `;
+btn.addEventListener("dblclick", (event) => {
+  console.log(this);
+  console.log(event);
+  console.log(event.target);
+  console.log("dbl-clicked");
+});
 
 
-// const myBTN = document.querySelector("button");
-// console.log(myBTN);
-// console.dir(myBTN);
+02-removing-event-listeners
+=================================
+import "../assets/css/style.css";
 
-// myBTN.setAttribute("data-test", "amit B");
-// console.log(myBTN.getAttribute("data-test"));
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <button>Click me</button>
+`;
 
-// myBTN.setAttribute("aria-label", "please close the popup");
-// console.log(myBTN.getAttribute("aria-label"));
-// console.log(myBTN.getAttribute("aria-label"));
+const btn = document.querySelector("button");
+console.dir(btn);
 
-// console.log(myBTN.attributes["aria-label"]);
+function handleClick(event) {
+  console.log("clicked hapened");
+}
+
+// adding event listner
+btn.addEventListener("click", handleClick);
+
+setTimeout(() => {
+  // removing event listner
+  btn.removeEventListener("click", handleClick);
+}, 5000);
+
+// removehandler will work only named function , 
+// it wont with arrow and anonuymous function
+
+
+btn.addEventListener(
+  "dblclick",
+  () => {
+    console.log("I am dbl clicked");
+  },
+  { once: true }
+);
+
+*/
