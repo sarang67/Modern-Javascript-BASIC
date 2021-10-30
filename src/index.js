@@ -5,157 +5,173 @@ app.innerHTML = `
    <h1>Modern JavaScript: DOM</h1>
   `;
 
-/*
-03-setting-getting-inline-styles
-=================================
-import "../assets/css/style.css";
+// event-bubbling-capturing-propagation
+// =========================================
+// import "../assets/css/style.css";
 
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <button type="button" >Click Me</button>
-`;
+// const app = document.getElementById("app");
+// app.innerHTML = `
+//   <h1>JavaScript DOM</h1>
+//   <div class="one" style="border:1px solid red; padding:20px">
+//      <div class="two" style="border:1px solid green; padding:20px;margin:20px">
+//         <button class="three">click me</button>
+//       </div>
+//   </div>
+// `;
 
-//style="padding:20px; font-size:20; color:red; border-left:2px solid green"
-const btn = document.querySelector("button");
-console.dir(btn.style);
+// // We have three phase for our eevent propagate, first phase is capturing phase (event goes down to the element),
+// //second phase is target phase(wether the event reaches the target element), third phase is bubbling phase (whether the event up for the elemet)
 
-btn.style.cssText =
-  "padding:20px; font-size:20px; color:red; border-left:2px solid green";
+// //buubling phase is better than capturing phase , so if we make the third option of addEventListner is false (which is by default)
+// //means we want to use bubbling phase , or suppose we  make true third parameter , we want to use capturing phase
 
-btn.style.padding = "30px";
-btn.style.fontSize = "30px";
-btn.style.color = "yellow";
-btn.style.borderLeft = "5px solid green";
+// const one = document.querySelector(".one");
+// const two = document.querySelector(".two");
+// const three = document.querySelector(".three");
 
+// function handleClick(event) {
+//   // will stop propagation on next level
+//   // event.stopPropagation();
+//   // will stop immidiate propagation as well , means only one event handler will call, other attached will be avoided
+//   // event.stopImmediatePropagation();
+//   console.log(event.target);
+// }
 
-04-setting-getting-classes-classlist
-=====================================
-import "../assets/css/style.css";
+// one.addEventListener("click", handleClick);
+// two.addEventListener("click", handleClick);
+// three.addEventListener("click", handleClick);
 
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <button type="button" class="one two">
-      Click Me !!
-  </button>
-`;
+// three.addEventListener("click", (event) => console.log("===>", event));
 
-const button = document.querySelector("button");
+// preventing-default-event-actions
+// ====================================
+// import "../assets/css/style.css";
 
-// old way set class
-button.className += " three";
+// const app = document.getElementById("app");
+// app.innerHTML = `
+//   <h1>JavaScript DOM</h1>
+//    <form>
+//     <label>
+//       Sign-up Email
+//       <input type="email">
+//     </lable>
+//     <label>
+//       I agree to the terms
+//       <input type="checkbox">
+//     </label>
+//     <button type="submit">submit</button>
+//    </form>
 
-// old wau get class
-console.log(button.className);
+//    <a href="google.com">google</a>;
+//   `;
 
-console.log(button.className.split(" "));
-console.log(button);
+// const form = document.querySelector("form");
+// const email = document.querySelector('input[type="email"]');
+// const checkbox = document.querySelector('input[type="checkbox"]');
 
-//new way classList
+// const ancher = document.querySelector("a");
 
-button.classList.add("four");
-button.classList.remove("one");
+// function handleSubmit(event) {
+//   if (!(email.value && checkbox.checked)) {
+//     event.preventDefault();
+//     console.log("form is not submitted");
+//     console.log(event.defaultPrevented);
+//     return;
+//   }
+//   console.log(event.defaultPrevented);
+//   console.log("i agree t&C , now form submitted");
+// }
 
-button.classList.toggle("six");
+// form.addEventListener("submit", handleSubmit);
 
-setTimeout(() => {
-  button.classList.toggle("six");
-}, 2500);
-
-button.classList.remove("one", "nine");
-
-
-********************** Events and Event Listeners******************************************
-// 01-adding-event-listeners
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <button>Click me</button>
-`;
-
-const btn = document.querySelector("button");
-console.dir(btn);
-
-// Avoid it does not allow multiple events
-// btn.onclick = function () {
-//   console.log("i am clicked");
-// };
-
-// btn.onclick = function () {
-//   console.log("i am clicked again");
-// };
-
-// btn.onfocus = function () {
-//   console.log("I am focused");
-// };
-
-// btn.onblur = function () {
-//   console.log("I am blurred");
-// };
-
-// btn.oncopy = function () {
-//   console.log("I am copied");
-// };
-
-function handleClick(event) {
-  console.log(event);
-  console.log(this);
-  console.log(event.target);
-  //console.log("I am handle clicked");
-}
-
-btn.addEventListener("click", handleClick);
-// btn.addEventListener("click", function () {
-//   console.log("i am handle clicked twice");
+// ancher.addEventListener("click", (event) => {
+//   event.preventDefault();
 // });
 
-// arrow function
+// checkbox.addEventListener("click", (event) => {
+//   event.preventDefault();
+// });
 
-btn.addEventListener("dblclick", (event) => {
-  console.log(this);
-  console.log(event);
-  console.log(event.target);
-  console.log("dbl-clicked");
-});
+// event-delegation-dynamic-events:-
+// ===================================
+// import "../assets/css/style.css";
 
+// const app = document.getElementById("app");
+// app.innerHTML = `
+//   <h1>JavaScript DOM</h1>
+//   <button>Add Item</button>
+//   <ul id="list">
+//    <li>Item 1</li>
+//    <li>Item 2</li>
+//    <li>Item 3</li>
+//    <li>Item 4</li>
+//   </ul>
+// `;
 
-02-removing-event-listeners
-=================================
+// const button = document.querySelector("button");
+// const list = document.querySelector("#list");
+// //const items = [...document.querySelectorAll("li")];
+
+// function handleCLick(event) {
+//   if (event.target.nodeName.toLowerCase() === "li") {
+//     console.log(event.target.innerText);
+//   }
+// }
+
+// // using of event delegation taking the advantage of bubbling effect,
+// //  and we are hanling event on parent once , and taking advanctage on child
+
+// list.addEventListener("click", handleCLick);
+
+// // items.forEach((item) => {
+// //   item.addEventListener("click", handleCLick);
+// // });
+
+// button.addEventListener("click", () => {
+//   const items = document.querySelectorAll("li");
+//   const li = document.createElement("li");
+
+//   li.innerText = `Item ${items.length + 1}`;
+
+//   // li.addEventListener("click", handleCLick);
+//   list.append(li);
+// });
+
+/*
+
+06-keyboard-events:-
+=====================
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <button>Click me</button>
+  <div style="height:1000px;border:1px solid red"></div>
+
 `;
 
-const btn = document.querySelector("button");
-console.dir(btn);
+document.addEventListener("keydown", (event) => {
+  //console.log(event);
+});
 
-function handleClick(event) {
-  console.log("clicked hapened");
-}
+document.addEventListener("keyup", (event) => {
+  //console.log(event.key, event.code);
 
-// adding event listner
-btn.addEventListener("click", handleClick);
+  switch (event.key) {
+    case "a": {
+      console.log("I am key A");
+      break;
+    }
+    case "b": {
+      console.log("I am key B");
+      break;
+    }
+    case "ArrowUp": {
+      console.log("I am ArrowUp");
+      break;
+    }
+  }
+});
 
-setTimeout(() => {
-  // removing event listner
-  btn.removeEventListener("click", handleClick);
-}, 5000);
-
-// removehandler will work only named function , 
-// it wont with arrow and anonuymous function
-
-
-btn.addEventListener(
-  "dblclick",
-  () => {
-    console.log("I am dbl clicked");
-  },
-  { once: true }
-);
 
 */
