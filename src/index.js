@@ -5,254 +5,210 @@ app.innerHTML = `
    <h1>Modern JavaScript: DOM</h1>
   `;
 
-//**********************Forms and Events********************************
-
 /*
-  1-access-forms-and-elements:-
-================================
+05-input-elements:-
+====================
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-  <form name="order">
-   <label>
-    Full Name
-    <input type="text" name="fullName"/>
-   </label>
+  <form name="example">
+    <input type="text" name="myInput" value="hello input"/>
+  </form>
 `;
 
-//const form = document.querySelector("form");
-//console.log(form);
+const form = document.forms.example;
+const myInput = form.myInput;
 
-//const orderForm = document.forms[0];
-//console.log(orderForm);
+console.dir(myInput);
 
-console.log(document.forms);
+// 1. properties that are useful.
 
-const orderForm = document.forms.order;
-console.log(orderForm);
+// set
+myInput.value = "Good Bye";
 
-console.log(orderForm.elements);
+//get
+console.log(myInput.value);
+//myInput.readOnly = true;
+//myInput.disabled = true;
 
-const fullName = orderForm.elements.fullName;
+//event
 
-console.log(fullName);
+myInput.addEventListener("focus", () => {
+  console.log("focus");
+});
 
-//const { fullName, email } = orderForm.elements;
-//console.log(fullName, email);
+myInput.addEventListener("blur", () => {
+  console.log("blur");
+});
 
-function handleInput(event) {
-  // access the value
-  console.log(event.target.value);
-  //access the form
-  console.log(event.target.form);
-}
-// bind the input event
-fullName.addEventListener("input", handleInput);
-fullName.addEventListener("change", handleInput);
-   */
+myInput.addEventListener("change", () => {
+  console.log("change");
+});
 
-/*****
-02-submit-event-formdata:-
-=========================
+myInput.addEventListener("input", () => {
+  console.log("input");
+});
+
+//methods
+
+myInput.focus();
+setTimeout(() => {
+  myInput.blur();
+}, 2500);
+
+
+
+06-radio-input-elements
+=======================
+	import "../assets/css/style.css";
+
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <form name="example">
+  <div id="container">
+      <label>
+        Red 
+        <input type="radio" value="red"  name="color" checked/>
+      </label>
+
+      <label>
+        Green
+        <input type="radio" value="green"  name="color" />
+      </label>
+      
+      <label>
+        Yellow
+        <input type="radio" value="yellow"  name="color" />
+      </label>
+  </div>
+  </form>
+`;
+
+const form = document.forms.example;
+const radios = [...form.elements.color];
+//console.log(radios);
+
+// 1. properties that are useful
+
+// radios.forEach((radio) => {
+//   console.log(radio.value);
+//   console.log(radio.checked);
+// });
+
+//const checked = radios.find((radio) => radio.checked === true);
+//console.log(checked);
+
+// using event delegation
+// 2. event // input and change
+const container = document.getElementById("container");
+
+container.addEventListener("change", () => {
+  const checked = radios.find((radio) => radio.checked === true);
+  console.log(checked.value);
+  // modern way
+  console.log(form.elements.color.value);
+});
+
+// 3 methods
+
+radios[2].select();
+
+
+//07-checkbox-input-elements
+import "../assets/css/style.css";
+
+const app = document.getElementById("app");
+app.innerHTML = `
+  <h1>JavaScript DOM</h1>
+  <form name="example">
+  <div id="container">
+      <label>
+        marketing ? 
+        <input type="checkbox"   name="marketing" />
+      </label>
+
+
+  </div>
+  </form>
+`;
+
+const form = document.forms.example;
+const checkbox = form.elements.marketing;
+
+checkbox.checked = true;
+
+// .1 property
+//console.log(checkbox.checked);
+//console.log(checkbox.value);
+
+// 2. event
+
+checkbox.addEventListener("change", () => {
+  console.log(checkbox.checked);
+  console.log(checkbox.value);
+});
+
+// 3 methods
+
+checkbox.select();
+
+
+08-select-elements
+=====================
 
 import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 app.innerHTML = `
   <h1>JavaScript DOM</h1>
-    <form  name="order">
-      <label>
-        Your Name
-        <input type="text" name="fullname" />
-      </label>
-      <label>
-        Which pizza would you like?
-        <select name="pizza">
-          <option value="peproni">Peproni</option>
-          <option value="cheesy">Cheesy</option>
-          <option value="meety">Meety</option>
-        </select>
-      </label>
-      <input type="submit">
-      </form>
-
-
+  <form name="example">
+  <div id="container">
+    <select name="framework">
+      <option  value=''>select framework</option>
+      <option  value='angular' selected>Angular</option>
+      <option  value='react'>React</option>
+      <option  value='vue'>Vue</option>
+    </select>
+  
+  </div>
+  </form>
 `;
 
-const form = document.forms.order;
+const form = document.forms.example;
+const select = form.elements.framework;
 
-function handleSubmit(event) {
-  event.preventDefault();
-  new FormData(event.target);
-  //console.log([...new FormData(event.target)]);
-}
+console.dir(select);
 
-function handleformdata(event) {
-  //  console.log(event.formData);
-  //  console.log([...event.formData]);
-  //  console.log([...event.formData.values()]);
-  //  console.log([...event.formData.entries()]);
+// .1 property
+console.log(select.value);
+select.value = "vue";
 
-  const entries = event.formData.entries();
-  for (const entry of entries) {
-    console.log(entry);
-  }
-}
+// 2 selectedIndex
+const id = 2;
+console.log(select.selectedIndex);
+select.selectedIndex = id;
+console.log(select.selectedIndex);
 
-form.addEventListener("submit", handleSubmit);
-form.addEventListener("formdata", handleformdata); 
+//3 select dom element
+console.log(select.options[select.selectedIndex]);
+
+// 4. event
+
+select.addEventListener("change", () => {
+  console.log(select.value);
+  console.log(select.selectedIndex);
+  console.log(select.options[select.selectedIndex]);
+});
+
+// 5 methods add new options
+const option = document.createElement("option");
+option.value = "javascript";
+option.innerText = "Javascript";
+
+//select.append(option);
+select.add(option, 2);
 
 */
-
-/****
- * 03-transform-formdata (using query string and json):-
-=======================
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-    <form  name="order">
-      <label>
-        Your Name
-        <input type="text" name="fullname" />
-      </label>
-      <label>
-        Which pizza would you like?
-        <select name="pizza">
-          <option value="peproni">Peproni</option>
-          <option value="cheesy">Cheesy</option>
-          <option value="meety">Meety</option>
-        </select>
-      </label>
-      <div>
-      What Size ?
-      <label>
-        <input type="radio" name="size" value="small" checked/>
-      </label>
-      <lable>
-        <input type="radio" name="size" value="medim" checked/>
-      </label>
-      <lable>
-        <input type="radio" name="size" value="large" checked/>
-      </label>
-      <label>
-      Quantity?
-        <input type="number" name="quanitity" value="1"/>
-      </label>
-      </div>
-      <input type="submit">
-      </form>
-
-
-`;
-
-const form = document.forms.order;
-
-function handleSubmit(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const data = [...formData.entries()];
-  
-  // url string
-  // fullname=sarang%20jain&pizza=meety&size=large&quanitity=1
-
-
-  // Another way to create url query string form sending form data
-  const asString2 = new URLSearchParams(formData);
-  console.log(asString2);
-  console.log(asString2.toString());
-
-  // second way to sending data ---> json approach
-
-  const asJson = JSON.stringify(Object.fromEntries(formData));
-  console.log(asJson);
-}
-
-form.addEventListener("submit", handleSubmit);
-
- */
-
-/***
-
-04-fetch-api-formdata (send form data):-
-=====================================
-
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-    <form  name="order">
-      <label>
-        Your Name
-        <input type="text" name="fullname" />
-      </label>
-      <label>
-        Which pizza would you like?
-        <select name="pizza">
-          <option value="peproni">Peproni</option>
-          <option value="cheesy">Cheesy</option>
-          <option value="meety">Meety</option>
-        </select>
-      </label>
-      <div>
-      What Size ?
-      <label>
-        <input type="radio" name="size" value="small" checked/>
-      </label>
-      <lable>
-        <input type="radio" name="size" value="medim" checked/>
-      </label>
-      <lable>
-        <input type="radio" name="size" value="large" checked/>
-      </label>
-      <label>
-      Quantity?
-        <input type="number" name="quanitity" value="1"/>
-      </label>
-      </div>
-      <input type="submit">
-      </form>
-
-
-`;
-
-const form = document.forms.order;
-
-function handleSubmit(event) {
-  event.preventDefault();
-  const formData = new FormData(event.target);
-  const data = [...formData.entries()];
-  // url string
-  // fullname=sarang%20jain&pizza=meety&size=large&quanitity=1
-
-  // Another way to create url query string form sending form data
-  const asString2 = new URLSearchParams(formData).toString();
-  // console.log(new URLSearchParams(formData));
-  // console.log(asString2);
-
-  // second way to sending data ---> json approach
-
-  const asJson = JSON.stringify(Object.fromEntries(formData));
-  console.log(asJson);
-
-  fetch("/fakeApi", {
-    method: "post",
-    body: asString2,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  });
-
-  fetch("/fakeApi2", {
-    method: "post",
-    body: asJson,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-form.addEventListener("submit", handleSubmit);
-
-
- */
