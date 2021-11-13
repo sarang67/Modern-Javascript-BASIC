@@ -18,6 +18,33 @@ app.innerHTML = `
     </div>
 `;
 
+/*
+Assignment
+=============
+5) update state using event delegation  for checkbox
+
+hint :-
+
+    todosString += `
+      <li data-id="${index}" ${todo.complete ? " class='todos-complete'" : ""}>
+        <input type="checkbox" ${todo.complete ? " checked" : " "}/>
+        <span>${todo.label}</span>
+        <button type="button"></button>
+      </li>
+    `;
+
+
+
+6) delete select items
+
+7) Ui state clear filter:- 
+enable the clear button , one once you click , this will only show the unchecked list items.
+
+8) use localstorage  for persisting data , data shoudl not be dele
+
+*/
+
+
 //  state initilization and add functinality
 
 // state
