@@ -2,213 +2,70 @@ import "../assets/css/style.css";
 
 const app = document.getElementById("app");
 app.innerHTML = `
-   <h1>Modern JavaScript: DOM</h1>
-  `;
-
-/*
-05-input-elements:-
-====================
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <form name="example">
-    <input type="text" name="myInput" value="hello input"/>
-  </form>
+    <div class="todos">
+         <div class="todos-header">
+            <h3 class="todos-title">Todo List</h3>
+            <div>
+            <p>You have <span class="todos-count"></span>Items</p>
+            <button type="button" class="todos-clear" style="display:none"></button>
+            </div>
+         </div>
+         <form class="todos-form" name="todos">
+           <input type="text" placeholder ="what is next item ?" name="todo" />
+           <ul class="todos-list">
+           </ul>
+         </form>
+    </div>
 `;
 
-const form = document.forms.example;
-const myInput = form.myInput;
+//  state initilization and add functinality
 
-console.dir(myInput);
+// state
+let todos = [];
 
-// 1. properties that are useful.
+//1 selctor
+const root = document.querySelector(".todos");
+const list = root.querySelector(".todos-list");
 
-// set
-myInput.value = "Good Bye";
+const form = document.forms.todos;
+const input = form.elements.todo;
 
-//get
-console.log(myInput.value);
-//myInput.readOnly = true;
-//myInput.disabled = true;
+// 3 functions
 
-//event
+function renderTodos(todos) {
+  let todosString = ``;
 
-myInput.addEventListener("focus", () => {
-  console.log("focus");
-});
+  todos.forEach((todo, index) => {
+    todosString += `
+      <li data-id="${index}"  />
+       <input type="checkbox" />
+       <span class="todos-clear">${todo.label}</span>
+       <button type="button"></button>
+      </li>
+    `;
+  });
+  console.log(todosString);
+  console.log("---------------------------");
 
-myInput.addEventListener("blur", () => {
-  console.log("blur");
-});
+  list.innerHTML = todosString;
+}
 
-myInput.addEventListener("change", () => {
-  console.log("change");
-});
+function addTodo(event) {
+  event.preventDefault();
 
-myInput.addEventListener("input", () => {
-  console.log("input");
-});
+  const label = input.value.trim();
+  const complete = false;
 
-//methods
+  todos = [...todos, { label, complete }];
 
-myInput.focus();
-setTimeout(() => {
-  myInput.blur();
-}, 2500);
+  renderTodos(todos);
+  //console.log(todos);
+  input.value = "";
+}
 
+//2 initilization
+function init() {
+  form.addEventListener("submit", addTodo);
+}
 
-
-06-radio-input-elements
-=======================
-	import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <form name="example">
-  <div id="container">
-      <label>
-        Red 
-        <input type="radio" value="red"  name="color" checked/>
-      </label>
-
-      <label>
-        Green
-        <input type="radio" value="green"  name="color" />
-      </label>
-      
-      <label>
-        Yellow
-        <input type="radio" value="yellow"  name="color" />
-      </label>
-  </div>
-  </form>
-`;
-
-const form = document.forms.example;
-const radios = [...form.elements.color];
-//console.log(radios);
-
-// 1. properties that are useful
-
-// radios.forEach((radio) => {
-//   console.log(radio.value);
-//   console.log(radio.checked);
-// });
-
-//const checked = radios.find((radio) => radio.checked === true);
-//console.log(checked);
-
-// using event delegation
-// 2. event // input and change
-const container = document.getElementById("container");
-
-container.addEventListener("change", () => {
-  const checked = radios.find((radio) => radio.checked === true);
-  console.log(checked.value);
-  // modern way
-  console.log(form.elements.color.value);
-});
-
-// 3 methods
-
-radios[2].select();
-
-
-//07-checkbox-input-elements
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <form name="example">
-  <div id="container">
-      <label>
-        marketing ? 
-        <input type="checkbox"   name="marketing" />
-      </label>
-
-
-  </div>
-  </form>
-`;
-
-const form = document.forms.example;
-const checkbox = form.elements.marketing;
-
-checkbox.checked = true;
-
-// .1 property
-//console.log(checkbox.checked);
-//console.log(checkbox.value);
-
-// 2. event
-
-checkbox.addEventListener("change", () => {
-  console.log(checkbox.checked);
-  console.log(checkbox.value);
-});
-
-// 3 methods
-
-checkbox.select();
-
-
-08-select-elements
-=====================
-
-import "../assets/css/style.css";
-
-const app = document.getElementById("app");
-app.innerHTML = `
-  <h1>JavaScript DOM</h1>
-  <form name="example">
-  <div id="container">
-    <select name="framework">
-      <option  value=''>select framework</option>
-      <option  value='angular' selected>Angular</option>
-      <option  value='react'>React</option>
-      <option  value='vue'>Vue</option>
-    </select>
-  
-  </div>
-  </form>
-`;
-
-const form = document.forms.example;
-const select = form.elements.framework;
-
-console.dir(select);
-
-// .1 property
-console.log(select.value);
-select.value = "vue";
-
-// 2 selectedIndex
-const id = 2;
-console.log(select.selectedIndex);
-select.selectedIndex = id;
-console.log(select.selectedIndex);
-
-//3 select dom element
-console.log(select.options[select.selectedIndex]);
-
-// 4. event
-
-select.addEventListener("change", () => {
-  console.log(select.value);
-  console.log(select.selectedIndex);
-  console.log(select.options[select.selectedIndex]);
-});
-
-// 5 methods add new options
-const option = document.createElement("option");
-option.value = "javascript";
-option.innerText = "Javascript";
-
-//select.append(option);
-select.add(option, 2);
-
-*/
+init();
