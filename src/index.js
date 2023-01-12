@@ -6,130 +6,68 @@ app.innerHTML = `
 `;
 
 /*
-// string
+// string method
 
-let greet = "sarang jain";
-let greet2 = "jain sarang";
+console.log(String.prototype);
+console.log("sarang".charAt(2));
 
-console.log(greet);
-console.log(greet2);
+console.log("sarangs".indexOf("z"));
 
-console.log('Hello  "sarang"');
-console.log("Hello Ma'am");
-console.log("Hello Ma'am");
+var name = "sarang jain";
+console.log(name.indexOf("sarang"));
 
-console.log("Hello J\"ava'script");
-console.log("Hello Ma'am");
-
-console.log("sarang" + "kumar" + "jain" + "!!!");
-
-console.log(`sarang kumar jain !!!`);
-
-console.log(`
-information 
----------------
-name ==> sarang jain
-age ==> 34
-
-`);
-
-console.log("Hello" + " " + greet);
-
-let isHappy = false;
-
-console.log(`
-
-Hello 
-   
-${greet}
-
-${test()}
-
-${isHappy ? ":)" : ":("}
-
-`);
-
-function test() {
-  return "Hello";
+if (name.indexOf("sarang") !== -1) {
+  console.log("sarang found");
+} else {
+  console.log("name sarang not found");
 }
 
-------------------------
-// how we can use STring function or STring function constructor
+console.log("sarang".includes("kk"));
 
-// console.log(String(55), 55);
-// console.log(String(55 + 10));
-// console.log(String(true));
-// console.log(String({ name: "sarang" }));
-// console.log(String([1, 2, 3, 4]));
-// console.log(String(["hi", "hell0"]));
+console.log("sarangkumarjain".slice(0, 5));
+console.log("sarangkumarjain".slice(2, 5));
+console.log("sarangjain".slice(2, -3));
+console.log("sarangjain".slice(3, 5));
+console.log("sarangjain".slice(3));
 
-// let myname = String("sarang jain");
+console.log("sarang kumar jain".split(" "));
 
-// string using function constructor
+console.log("**********");
 
-console.log(new String(555));
-//var no = '555' ---> new STring(555).valueOf()
+console.log("        asdasda s d                  ".trim());
+console.log("sarang kumar sarang jain".replace(" ", "mona"));
+console.log("           sasa".trimLeft());
 
-let myName = "sarng jain";
-console.log(myName["0"]);
-console.log(myName["1"]);
-console.log(myName["2"]);
+console.log("sarang".substring(1, 5));
 
-console.log(myName["2"] + myName["3"]);
+console.log("sarang".concat("jain", "kumar" ));
 
-var obj = {
-  name: "sarang jain",
-  age: 25,
-};
+--------------
 
-console.log(obj);
+// boolean in depth
 
-// . synta
-// [] computed member access
-console.log(obj.name);
-console.log(obj["name"]);
-console.log(obj["age"]);
+const isMarried = true;
+const hasChild = false;
 
-let studentName = "Amar sharma";
-console.log(studentName.length);
-console.log(studentName[studentName.length - 1]);
+console.log(isMarried);
+console.log(hasChild);
 
-***************
+// type conversion
+console.log(!!"sarang");
+console.log(Boolean("sarang"));
+console.log(Boolean(0));
 
-//  premitive types are immutable
-// they are pass by value
+// 0 , null ,'', undefined, false
 
-const immutableString = "I will never change !!!";
-const upperCase = immutableString.toUpperCase();
-//"I will never change !!!".toUpperCAse
-console.log(upperCase);
-console.log(immutableString);
+console.log(new Boolean(true));
 
-//
+console.log(Boolean.prototype);
 
-let myName = "sarang";
-let myRefrence = myName; // sarang
+// type checking in boolean
 
-myName += " jain"; // myName = myName + ' jain'
-myRefrence += " kumar jain"; // myRefrence = myRefrence + ' kumar jain'
-
-console.log(myName);
-console.log(myRefrence);
-
-**********************
+console.log(typeof true);
+console.log(true instanceof Boolean);
+console.log(new Boolean() instanceof Boolean);
 
 
-// type checkking
-
-console.log(typeof "sarang");
-console.log(typeof "0");
-console.log(typeof String(0));
-
-console.log("sarang" instanceof String);
-console.log(new String("kk") instanceof String);
-
-console.log(typeof typeof "sarang");
-
-
-------------------------------------
 */
